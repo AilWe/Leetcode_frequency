@@ -54,3 +54,37 @@ int main() {
     sum = a.twoSumLessThanK(numbers, target);
     cout << sum << endl;
 }
+//Brute force
+#include <bits/stdc++.h>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int twoSumLessThanK(vector<int>& A, int K) {
+        sort(A.begin(), A.end());
+        if (A.size()< 2)
+            return -1;
+        int target = K - 1;
+        while(K > target && target >= A[0]+A[1]){
+            for (int i = 0; i < A.size(); i++){
+                for(int j = i+1; j < A.size(); j++){
+                    if(A[i] + A[j] == target){
+                        return target;
+                    }
+                }
+            }
+            target --;
+        }
+        return -1;
+    }
+};
+//Driven
+int main() {
+    int sum;
+     vector <int> numbers = {34,23,1,24,75,33,54,8};
+    int target = 60;
+    Solution a;
+    sum = a.twoSumLessThanK(numbers, target);
+    cout << sum << endl;
+}
+
