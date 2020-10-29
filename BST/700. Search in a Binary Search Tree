@@ -25,7 +25,7 @@ public:
         std::queue <TreeNode*> s;
         s.push(root);
         TreeNode *curr = nullptr;
-        while(s.size()>0){
+        while(curr != NLL){
             curr = s.front();
             s.pop();
             if(curr -> val < val && curr->right){
@@ -34,10 +34,9 @@ public:
             else if (curr -> val > val && curr->left) {
                 s.push(curr->left);
             }
-            else if (curr -> val == val)
+            else (curr -> val == val)
                 return curr;
-            else
-                return NULL;
+           
         }
         return NULL;
     }
