@@ -1,0 +1,35 @@
+/*
+Given an array A of positive integers, let S be the sum of the digits of the minimal element of A.
+
+Return 0 if S is odd, otherwise return 1.
+*/
+#include <bits/stdc++.h>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    int sumOfDigits(vector<int>& A) {
+        sort(A.begin(), A.end());
+        int val = A.front();
+        int sum = 0;
+        // transfer number to digit
+        while (val > 0){
+            int dig = val % 10;
+            sum = sum + dig;
+            val = val / 10;
+        }
+        if (sum % 2 == 0)
+            return 1;
+        else
+            return 0;
+    }
+};
+//Driven
+int main() {
+    int sum;
+    vector <int> numbers = {34,23,1,24,75,33,54,8};
+    Solution a;
+    sum = a.sumOfDigits(numbers);
+    cout << sum << endl;
+}
