@@ -40,3 +40,57 @@ int main(){
     std::cout << sum;
     return 0;
 }
+//bfs
+#include <iostream>
+#include <queue>
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int number);
+    //TreeNode(int number, TreeNode *l, TreeNode *r): val(number), left(l), right(r) {}
+};
+
+TreeNode::TreeNode(int number) : val(number), left(nullptr),right(nullptr){}
+
+class Solution{
+public:
+    int sum = 0;
+    int rangeSumBST(TreeNode *root, int L, int R);
+};
+
+int Solution::rangeSumBST(TreeNode *root, int L, int R) {
+    std::queue<TreeNode*> bfs;
+    int sum = 0;
+    if(root == NULL)
+        return 0;
+    TreeNode *curr = NULL;
+    bfs.push(root);
+    while(!bfs.empty()){
+        curr = bfs.front();
+        bfs.pop();
+        if(curr->val >= L && curr->val <= R)
+            sum = sum + curr->val;
+        if(curr->left)
+            bfs.push(curr->left);
+        if(curr->right)
+            bfs.push(curr->right);
+    }
+    return sum;
+}
+
+int main(){
+    auto* rt = new TreeNode(10);
+    rt-> left = new TreeNode(5);
+    rt-> right = new TreeNode(15);
+    rt-> left ->left = new TreeNode (3);
+    rt-> left -> right = new TreeNode(7);
+    rt -> right -> right = new TreeNode(18);
+    int L = 7;
+    int R = 15;
+    Solution a;
+    int sum =  a.rangeSumBST(rt, L, R);
+    std::cout << sum;
+    return 0;
+}
