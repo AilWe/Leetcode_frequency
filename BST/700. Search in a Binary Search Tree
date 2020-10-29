@@ -1,0 +1,57 @@
+/*
+Given the root node of a binary search tree (BST) and a value. 
+You need to find the node in the BST that the node's value equals the given value. 
+Return the subtree rooted with that node. If such node doesn't exist, you should return NULL.
+*/
+//iterative
+#include <iostream>
+#include <queue>
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int number);
+    //TreeNode(int number, TreeNode *l, TreeNode *r): val(number), left(l), right(r) {}
+};
+
+TreeNode::TreeNode(int number) : val(number), left(nullptr),right(nullptr){}
+
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(root == NULL)
+            return NULL;
+        std::queue <TreeNode*> s;
+        s.push(root);
+        TreeNode *curr = nullptr;
+        while(s.size()>0){
+            curr = s.front();
+            s.pop();
+            if(curr -> val < val && curr->right){
+                s.push(curr -> right);
+            }
+            else if (curr -> val > val && curr->left) {
+                s.push(curr->left);
+            }
+            else if (curr -> val == val)
+                return curr;
+            else
+                return NULL;
+        }
+        return NULL;
+    }
+};
+int main(){
+    auto* rt = new TreeNode(10);
+    rt-> left = new TreeNode(5);
+    rt-> right = new TreeNode(15);
+    rt-> left ->left = new TreeNode (3);
+    rt-> left -> right = new TreeNode(7);
+    rt -> right -> right = new TreeNode(18);
+    int val = 5;
+    Solution a;
+    TreeNode *sum =  a.searchBST(rt, val);
+    std::cout << & sum;
+    return 0;
+}
