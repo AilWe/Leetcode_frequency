@@ -1,0 +1,83 @@
+/*Find the sum of all left leaves in a given binary tree.*/
+#include <iostream>
+#include <vector>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int x): val(x), left(nullptr), right(nullptr){}
+};
+using namespace std;
+class Solution {
+    int sum = 0;
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(root == NULL)
+            return 0;
+        if(root -> left && root -> left -> left == NULL && root ->left -> right == NULL){
+            sum = sum + root -> left -> val;
+        }
+        sumOfLeftLeaves(root->left);
+        sumOfLeftLeaves(root->right);
+        return sum;
+    }
+};
+//Driven
+int main(){
+    auto rt = new TreeNode(3);
+    rt->left = new TreeNode (9);
+    rt -> right = new TreeNode (20);
+    rt -> right -> left = new TreeNode (15);
+    rt -> right -> right = new TreeNode (7);
+    Solution a;
+    int n = a.sumOfLeftLeaves(rt);
+    std::cout << n << std::endl;
+}
+//iterative
+#include <iostream>
+#include <queue>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int x): val(x), left(nullptr), right(nullptr){}
+};
+
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(root == NULL)
+            return 0;
+        int sum = 0;
+        queue <TreeNode*> s;
+        s.push(root);
+        TreeNode *curr = NULL;
+        while(!s.empty()){
+            curr = s.front();
+            s.pop();
+            if(curr!= NULL && curr -> left && curr -> left -> left == NULL && curr ->left -> right == NULL){
+                sum = sum + curr -> left -> val;
+            }
+            if(curr -> left)
+                s.push(curr->left);
+            if(curr->right)
+                s.push(curr->right);
+        }
+        return sum;
+    }
+};
+//Driven
+int main(){
+    auto rt = new TreeNode(3);
+    rt->left = new TreeNode (9);
+    rt -> right = new TreeNode (20);
+    rt -> right -> left = new TreeNode (15);
+    rt -> right -> right = new TreeNode (7);
+    Solution a;
+    int n = a.sumOfLeftLeaves(rt);
+    std::cout << n << std::endl;
+}
