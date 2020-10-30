@@ -2,6 +2,8 @@
 
 For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
 Given the sorted array: [-10,-3,0,5,9],
+Time complexity: O(N) since each node visit once
+Space complexity: O(N) to keep the output, O(logN) for the recursive stack
 */
 //Preorder Traversal: Always Choose Left Middle Node as a Root
 #include <iostream>
