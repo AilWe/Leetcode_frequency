@@ -15,4 +15,7 @@ Depth First Search (DFS)
 Breadth First Search (BFS)
   Scan through the tree level by level
   Following the order of height, from top to bottom
+Inorder traversal of BTS ia an array sorted in the ascending order
+  It is height-balanced
 */
+
