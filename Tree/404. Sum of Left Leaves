@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int x): val(x), left(nullptr), right(nullptr){}
+};
+using namespace std;
+class Solution {
+    int sum = 0;
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(root == NULL)
+            return 0;
+        if(root -> left && root -> left -> left == NULL && root ->left -> right == NULL){
+            sum = sum + root -> left -> val;
+        }
+        sumOfLeftLeaves(root->left);
+        sumOfLeftLeaves(root->right);
+        return sum;
+    }
+};
+//Driven
+int main(){
+    auto rt = new TreeNode(3);
+    rt->left = new TreeNode (9);
+    rt -> right = new TreeNode (20);
+    rt -> right -> left = new TreeNode (15);
+    rt -> right -> right = new TreeNode (7);
+    Solution a;
+    int n = a.sumOfLeftLeaves(rt);
+    std::cout << n << std::endl;
+}
