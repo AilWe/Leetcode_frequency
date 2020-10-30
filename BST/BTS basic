@@ -7,3 +7,12 @@ Binary Search Tree is a binary tree where the key in each node
   Insert
   Delete
 */
+/*
+Depth First Search (DFS)
+  Depth as the priority
+  Start from a root and reach all the way down to certain leaf, then back to root to reach another branch
+  Can be separated as preorder, inorder and postorder
+Breadth First Search (BFS)
+  Scan through the tree level by level
+  Following the order of height, from top to bottom
+*/
