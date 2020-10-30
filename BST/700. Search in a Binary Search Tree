@@ -55,3 +55,44 @@ int main(){
     std::cout << & sum;
     return 0;
 }
+//recursive
+#include <iostream>
+#include <queue>
+struct TreeNode{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(nullptr), right(nullptr){}
+    TreeNode(int number);
+    //TreeNode(int number, TreeNode *l, TreeNode *r): val(number), left(l), right(r) {}
+};
+
+TreeNode::TreeNode(int number) : val(number), left(nullptr),right(nullptr){}
+
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(root == NULL)
+            return NULL;
+        else if (val< root-> val)
+            return searchBST(root->left, val);
+        else if (val > root -> val)
+            return searchBST(root -> right, val);
+        else if (val == root -> val)
+            return root;
+        return NULL;
+    }
+};
+int main(){
+    auto* rt = new TreeNode(10);
+    rt-> left = new TreeNode(5);
+    rt-> right = new TreeNode(15);
+    rt-> left ->left = new TreeNode (3);
+    rt-> left -> right = new TreeNode(7);
+    rt -> right -> right = new TreeNode(18);
+    int val = 5;
+    Solution a;
+    TreeNode *sum =  a.searchBST(rt, val);
+    std::cout << & sum;
+    return 0;
+}
