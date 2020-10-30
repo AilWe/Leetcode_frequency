@@ -1,0 +1,37 @@
+/*
+Given an array of integers nums, you start with an initial positive value startValue.
+In each iteration, you calculate the step by step sum of startValue plus elements in nums (from left to right).
+Return the minimum positive value of startValue such that the step by step sum is never less than 1.
+*/
+#include <iostream>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    int minStartValue(vector<int>& nums) {
+        for(int i = 1; i < 100*nums.size(); i++){
+            int sum = i;
+            int flag = 0;
+            for (int j =0; j < nums.size(); j++){
+
+                sum = sum + nums[j];
+                if (sum < 1 ){
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0)
+                return i;
+            else
+                continue;
+        }
+        return -1;
+    }
+};
+//Driven
+int main(){
+    vector <int> vt = {-3,2,-3,4,2};
+    Solution a;
+    int n  = a.minStartValue(vt);
+    std::cout << n << std::endl;
+}
