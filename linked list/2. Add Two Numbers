@@ -1,0 +1,57 @@
+/*
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+*/
+//recursive
+class Solution {
+    int flag = 0;
+public:
+    ListNode* adddigit(ListNode* l1, ListNode* l2){
+        if (l1 == NULL && l2 == NULL){
+            if (flag == 1){
+                return new ListNode(1);
+            }
+            return NULL;
+        }
+        if(l1 == NULL && l2 != NULL){
+            int dl2 = l2 -> val + flag;
+            if (dl2 >= 10){
+                flag = 1;
+                dl2 = dl2 % 10;
+            }  
+            else 
+                flag = 0;
+            ListNode* nl = new ListNode(dl2);
+            nl -> next = adddigit(NULL, l2 ->next);
+            return nl;
+        }
+        if(l1 != NULL && l2 == NULL){
+            int dl1 = l1 -> val + flag;
+            if (dl1 >= 10){
+                flag = 1;
+                dl1 = dl1 % 10;
+            }
+            else
+                flag = 0;
+            ListNode* nl = new ListNode(dl1);
+            nl -> next = adddigit(l1 -> next, NULL);
+            return nl;
+        }
+        int dig = flag + l1 -> val + l2-> val;
+        if (dig >= 10){
+            flag = 1;
+            dig = dig % 10;
+        }
+        else flag =0;
+        cout << dig;
+        ListNode* nl = new ListNode(dig);
+        nl -> next = adddigit(l1 -> next, l2 ->next);
+        return nl;
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* nl = adddigit(l1, l2);
+        return nl;
+        
+    }
+};
