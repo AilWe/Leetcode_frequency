@@ -56,6 +56,9 @@ public:
     }
 };
 //iterative
+Time complexity: O(max(m,n))
+Space complexity: O(max(m,n)
+
 #include <iostream>
 using namespace std;
 struct ListNode{
