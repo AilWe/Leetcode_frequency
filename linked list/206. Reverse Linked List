@@ -1,0 +1,39 @@
+/*Reverse a singly linked list.*/
+//iterative
+//retrieve the data from beginning to end
+//create new ListNode from the end to beginning
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* tail = head;
+        vector <int> vt;
+        while(tail != NULL){//!tail not equal to tail != NULL
+            vt.push_back(tail->val);
+            tail = tail -> next;
+        }
+        //for(int i = 0; i < vt.size(); i++)
+        //    cout << vt[i] << endl;
+        ListNode* dummy = new ListNode;
+        ListNode* curr = dummy;
+        for(int i = vt.size()-1; i >= 0 ; i--){
+            curr->next = new ListNode(vt[i]);
+            curr = curr -> next;
+        }
+        return dummy-> next;
+    }
+};
+//recursive
+class Solution {
+    ListNode* dummy = new ListNode;
+    ListNode* tail = dummy;
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == NULL)
+            return NULL;
+        reverseList(head->next);
+        //cout << head -> val;
+        tail -> next = new ListNode(head->val);
+        tail = tail -> next;
+        return dummy-> next;
+    }
+};
