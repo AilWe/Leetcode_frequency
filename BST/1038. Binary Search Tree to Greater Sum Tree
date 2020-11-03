@@ -8,3 +8,53 @@ The right subtree of a node contains only nodes with keys greater than the node'
 Both the left and right subtrees must also be binary search trees.
 Note: This question is the same as 538: https://leetcode.com/problems/convert-bst-to-greater-tree/
 */
+//recursive
+class Solution {
+public:
+    //dfs rihgt first, then middle, then left
+    int sum;
+    TreeNode* bstToGst(TreeNode* root) {
+        if (root == NULL)
+            return 0; 
+        bstToGst(root->right);
+        sum = sum + root -> val;
+        root->val = sum;
+        bstToGst(root->left);
+        
+        return root;
+    }
+};
+//iterative ??
+class Solution {
+public:
+    TreeNode* bstToGst(TreeNode* root) {
+        TreeNode* temp = root;
+        vector<int> ans;
+        stack<TreeNode *> s;
+
+        while (root != NULL || s.empty() == false){ 
+            while (root !=  NULL){ 
+                s.push(root); 
+                root = root->left; 
+            } 
+            root = s.top(); 
+            s.pop(); 
+            ans.push_back(root->val);
+            root = root->right; 
+        }
+        root = temp;
+        int i=0;
+        while (root != NULL || s.empty() == false){ 
+            while (root !=  NULL){ 
+                s.push(root); 
+                root = root->left; 
+            } 
+            root = s.top(); 
+            s.pop(); 
+            root->val = accumulate(ans.begin()+i, ans.end(), 0);
+            i++;
+            root = root->right; 
+        }
+        return temp;
+    }
+};
