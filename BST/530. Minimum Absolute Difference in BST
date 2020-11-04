@@ -45,3 +45,19 @@ public:
         return minimul;
     }
 };
+//simple version recursive with inorder
+class Solution {
+    int minimul = INT_MAX;
+    TreeNode* prev = NULL;
+public:
+    int getMinimumDifference(TreeNode* root) {
+        if(root->left != nullptr)
+            getMinimumDifference(root->left);
+        if (prev != NULL)
+            minimul = min(minimul, root->val - prev->val);
+        prev = root;
+        if(root->right != nullptr)
+            getMinimumDifferencer(root->right);
+        return minimul;
+    }
+};
