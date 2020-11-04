@@ -26,3 +26,22 @@ public:
         return diffmin;
     }
 };
+//recursive with inorder
+class Solution {
+    int minimul = INT_MAX;
+    TreeNode* prev = NULL;
+public:
+    void inorder(TreeNode* root){
+        if(root == NULL)
+            return;
+        inorder(root->left);
+        if (prev != NULL)
+            minimul = min(minimul, root->val - prev->val);
+        prev = root;
+        inorder(root->right);
+    }
+    int getMinimumDifference(TreeNode* root) {
+        inorder(root);
+        return minimul;
+    }
+};
