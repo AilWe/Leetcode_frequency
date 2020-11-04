@@ -22,3 +22,31 @@ public:
     }
 };
 //vector
+//bsf
+class Solution {
+public:
+    int closestValue(TreeNode* root, double target) {
+        //bfs
+        queue <TreeNode*> q;
+        q.push(root);
+        TreeNode* curr = nullptr;
+        float mindif = FLT_MAX;
+        int nodevalue = -1;
+        while(!q.empty()){
+            curr = q.front();
+            q.pop();
+            if(curr != NULL){
+                float diff = abs(curr->val - target);
+                if(diff<mindif){
+                    mindif = diff;
+                    nodevalue = curr->val;
+                }
+            }
+            if(curr->left != NULL)
+                q.push(curr->left);
+            if(curr->right != NULL)
+            q.push(curr->right);
+        }
+        return nodevalue;
+    }
+};
