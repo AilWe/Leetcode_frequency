@@ -75,3 +75,35 @@ public:
         return false;       
     }
 };
+//make a vector first
+class Solution {
+    vector <int> vt;
+public:
+    vector<int> inorder(TreeNode* root){
+        if(root == NULL)
+            return {};
+        inorder(root->left);
+        vt.push_back(root->val);
+        inorder(root->right);
+        return vt;
+    }
+    
+    bool findTarget(TreeNode* root, int k) {
+        vector <int> vt;
+        vt = inorder(root);
+        //for(int i = 0; i < vt.size(); i++)
+        //    cout << vt[i]<<endl;
+        int l = 0, r = vt.size()-1;
+        while(l<r){
+            if(vt[l]+vt[r] == k)
+                return true;
+            if (vt[l]+vt[r]> k)
+                r--;
+            if(vt[l]+vt[r]< k)
+                l++;
+            
+        }
+        return false;
+        
+    }
+};
