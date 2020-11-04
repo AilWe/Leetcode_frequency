@@ -18,4 +18,8 @@ Breadth First Search (BFS)
 Inorder traversal of BTS ia an array sorted in the ascending order
   It is height-balanced
 */
+/*
+在调用时，不建议直接return TreeNode， 除非上一步要用到这一步地结果
+在执行recursive时，建议记录搜索到地东西，而不是直接return， 有可能return到上一步。
+*/
 
