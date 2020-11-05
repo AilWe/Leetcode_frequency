@@ -1,0 +1,17 @@
+1. Two sum：hashtable/two-point
+2. Add Two Numbers: carry+digitfromlist1+digitfromlist2
+3. Longest substring without repeating:
+  1)Brute Force: bool allUnique(substring) set
+                 transverse with allUnique
+                 if true, update the maximum length
+  2)Sliding window with hashset.
+4. Median of Two Sorted Arrays: len(left_part) = len(right_part); max(left_part) <= min(right_part)
+AB都分成等长地两部分，找到A[i-1]< B[j] && B[j-1]<A[i], A[i]太小，涨i减j,中位数是max(A[i-1], B[j-1]), max(A[i], B[j]))
+5. Longest parlindromic substring: bool palindromic(substring) length(substring), transverse with bool; sliding window;
+Dynamic programming: hashtable 存已经有的substring，查看是否在新的substring里；expandAroundCenter
+6. Zigzag conversion: sort by row: iterate through s from left to right, append each char to the appropriate row
+visit row: char in row 0, locate at k(2*numRow - 2); char in row 1, locate at k(2*numRows-2)+numRows-1; char in between
+at k(2*numRows-2)+i and (k+1)(2*numRows-2)-i
+7. reverse integer: pop and push
+8. string to integer: scan from left to right to check valid number and sign
+
