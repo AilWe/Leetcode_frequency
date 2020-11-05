@@ -24,7 +24,8 @@ public:
             value = (value+ head->val)*2;
         }
         if(head-> next != NULL){
-        getDecimalValue(head->next);}
+        getDecimalValue(head->next);//search
+        }
         return value;
     }
 };
