@@ -14,4 +14,13 @@ visit row: char in row 0, locate at k(2*numRow - 2); char in row 1, locate at k(
 at k(2*numRows-2)+i and (k+1)(2*numRows-2)-i
 7. reverse integer: pop and push
 8. string to integer: scan from left to right to check valid number and sign
+9. Palindrome Number: check the begin and end is same, or expandaroundcenter
+10.Regular Expression Matching: recursive and dynamic programming
+11. Container with most water: brute force; 
+12. Interger to Roman: hashtable
+13. Roman to Interger: consider all or hashtable
+14: Longest Common Prefix: horizontal scan:挨个比较，看哪个common， common再和下个比较; vertical scan
+Divide and conquer
+15: 3 Sum: sort + two pointer; Hashset;hashmap
+
 
