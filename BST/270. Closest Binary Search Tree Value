@@ -50,3 +50,45 @@ public:
         return nodevalue;
     }
 };
+//optimization of recursive
+class Solution {
+    double diff2 = FLT_MAX;
+    double diff1 = FLT_MAX;
+    TreeNode* prev = nullptr;
+    int rootdf = -1;
+    double prediff = FLT_MAX;
+    int flag = 0;
+public:
+    void closestvaluehelper(TreeNode* root, double target){
+        if(root->left)
+            closestvaluehelper(root->left, target);
+        double diff1 = abs(root->val - target);
+        //cout <<"1:"<< diff1 << " " ;
+        if(prev != NULL){
+            if(diff1> prediff){
+                //cout <<"3:"<< prev ->val<<" ";
+                rootdf = prev-> val;
+                flag =1;
+                return;
+            }
+        }
+        if(diff1 < diff2){
+            diff2 = diff1;
+            rootdf = root-> val;
+        }
+        prediff = diff1;  
+        //cout << "2:" << prediff << " ";
+        prev=root;
+        //cout << root -> val;
+        if(root->left == NULL && root->right ==NULL && flag == 0){
+            rootdf = root->val;
+            return;
+        }
+        if(root -> right)
+            closestvaluehelper(root -> right, target);
+    }
+    int closestValue(TreeNode* root, double target) {
+        closestvaluehelper(root, target);
+        return rootdf;
+    }
+};
