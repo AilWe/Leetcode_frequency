@@ -22,5 +22,17 @@ at k(2*numRows-2)+i and (k+1)(2*numRows-2)-i
 14: Longest Common Prefix: horizontal scan:挨个比较，看哪个common， common再和下个比较; vertical scan
 Divide and conquer
 15: 3 Sum: sort + two pointer; Hashset;hashmap
+16. 3 Sum Closest: two pointer; binary search
+17. Letter Combinations of a Phone Number: map
+18. 4 sum: hashset; two pointer
+19. Remove Nth Node From End of List: two pass: one pointer; one pass: two pointer
+20. Valid Parentheses: stack
+21: Merge Two Sorted Lists: recursive, iterasive two pointer
+22: Generate Parentheses: backtracking;closure number
+23: Merge k Sorted Lists: brute force; compare one by one; Priorityqueue
+24. Swap Nodes in Pairs: recursive and iterasive
+25. Reverse Nodes in k-Group: 先便利到第i个，然后指回去，然后让第一个指i+1
+26. Remove Duplicates from Sorted Array：和后面相同就delete前一个，否则就保留。
+
 
 
