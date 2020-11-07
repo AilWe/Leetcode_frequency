@@ -3,6 +3,42 @@ You are given two non-empty linked lists representing two non-negative integers.
 
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 */
+List + Addition simulation
+list: dummy head
+Addition simulation: carry bit
+special cases:
+1. Two numbers have different lengths
+eg. 123+45678
+2. Sume has more digits
+eg. 11+99 = 110
+dummy = tail = ListNode(0)
+while l1 or l2 or carry:
+    sum = l1?.val+l2?.val + carry
+    tail.next = ListNode(sum % 10)
+    tail = tail.next
+    carry = sum/=10
+    l1, l2 = l1?.next, l2?.next
+return dummy.next
+
+Time complexity: O(max(n,m))
+Space complexity : O(max(n,m))
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);//put on stack, not heap
+        ListNode* tail = &dummy;
+        int sum = 0;
+        while(l1 || l2 || sum){
+            sum = (l1 ? l1->val:0) + (l2? l2->val:0) + sum;
+            tail->next = new ListNode(sum%10);
+            sum = sum / 10;
+            l1 = l1? l1->next : nullptr;
+            l2 = l2? l2->next: nullptr;
+            tail= tail->next;
+        }
+        return dummy.next;
+    }
+};
 //recursive
 class Solution {
     int flag = 0;
