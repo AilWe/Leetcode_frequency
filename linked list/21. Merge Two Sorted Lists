@@ -22,3 +22,32 @@ public:
         return dummy.next;
     }
 };
+merge(a,b)
+= a , if b is empty
+= b , if a is empty
+= a[0] + merge(a[1:], b), if a[0] < b[0]
+= b[0] + merge(a, b[1:]), otherwise
+
+Time complexity
+Array:
+T(n) = n+T(n-1)
+T(n) = O(n^2)
+
+LinkedList:
+T(n) = 1+T(n-1)
+T(n) = O(n)
+//recursive
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(!l1 || !l2) return l1? l1: l2;
+        if(l1->val< l2->val){
+            l1->next = mergeTwoLists(l1->next, l2);
+            return l1;
+        }
+        else{
+            l2->next = mergeTwoLists(l1, l2->next);
+            return l2;
+        }
+    }
+};
