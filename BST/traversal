@@ -1,0 +1,71 @@
+/*94.Binary Tree Inorder Traversal Given a binary tree, return the inorder traversal of its nodes’ values.*/
+class Solution {
+    
+public:
+    void inorderTraversal(TreeNode* root, vector<int> &ans){
+        if(root == nullptr) return;
+        inorderTraversal(root->left, ans);
+        ans.push_back(root->val);
+        inorderTraversal(root->right, ans);
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector <int> ans;
+        inorderTraversal(root, ans);
+        return ans;
+        
+    }
+};
+class Solution {
+    vector <int> vt;
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        if(root == NULL) return {};
+        stack <TreeNode*> s;
+        TreeNode* curr = root;
+        while(curr!= NULL || !s.empty()){
+            while(curr!=NULL){
+                s.push(curr);
+                curr = curr -> left;
+            }
+            curr = s.top(); s.pop();
+            vt.push_back(curr->val);
+            curr = curr-> right;
+        }
+        return vt;
+    }
+};
+/*144. Binary Tree Preorder Traversal Given the root of a binary tree, return the preorder traversal of its nodes' values.*/
+class Solution {
+public:
+    void preorderTraversal(TreeNode* root, vector<int> &ans){
+        if(root == nullptr) return;
+        ans.push_back(root->val);
+        preorderTraversal(root->left, ans);
+        preorderTraversal(root->right, ans);
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector <int> ans;
+        preorderTraversal(root, ans);
+        return ans;
+        
+    }
+};
+class Solution {
+    
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode*> s;
+        if(root == NULL) return {};
+        TreeNode* curr = nullptr;
+        if(root != NULL) s.push(root);
+        while(!s.empty()){
+            curr = s.top(); s.pop();
+            ans.push_back(curr->val);
+            if(curr->right) s.push(curr->right);
+            if(curr->left) s.push(curr->left);
+        }
+        return ans;
+        
+    }
+};
