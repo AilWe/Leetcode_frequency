@@ -69,3 +69,20 @@ public:
         
     }
 };
+/*145. Binary Tree Postorder Traversal Given the root of a binary tree, return the postorder traversal of its nodes' values.*/
+class Solution {
+public:
+    void postorderTraversal(TreeNode* root, vector<int> &ans){
+        if(root == NULL) return;
+        if(root->left)
+            postorderTraversal(root->left, ans);
+        if(root->right)
+            postorderTraversal(root->right, ans);
+        ans.push_back(root->val);
+    }
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        postorderTraversal(root, ans);
+        return ans;
+    }
+};
