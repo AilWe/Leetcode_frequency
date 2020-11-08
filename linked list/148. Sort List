@@ -13,4 +13,53 @@ Merge Sort(top down)
   list T: O(nlogn) S: O(logn)
 Merge Sort(bottom up)
   array T: O(nlogn) S: O(n)
-  list T: O(nlogn) S: O(n)
+  list T: O(nlogn) S: O(1)
+Given the head of a linked list, return the list after sorting it in ascending order. Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
+//top down O(n logn) O(logn)
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    private:
+    ListNode* merge(ListNode* l1, ListNode* l2){
+        ListNode dummy(0);
+        ListNode* curr = &dummy;
+        while(l1&&l2){
+            if(l1->val > l2-> val){
+                swap(l1, l2);
+            }
+            curr->next = l1;
+            l1 = l1 -> next;
+            curr = curr-> next;
+        }
+        if(l1) curr->next = l1;
+        if(l2) curr->next = l2;
+        return dummy.next;
+    }
+public:
+    ListNode* sortList(ListNode* head) {
+        //Split the list into two parts using fast/slow pointers
+        //l1.l2 = split(1)
+        //l1',l2' = sortList(l1), sortList(l2)
+        //merge(l1', l2')
+        //Time complexity
+        if(!head||!head->next) return head;
+        ListNode* fast = head->next;
+        ListNode* slow = head;
+        while(fast && fast-> next){
+            fast = fast -> next -> next;
+            slow = slow -> next;
+        }
+        ListNode* mid = slow-> next;
+        slow -> next = nullptr;
+        return merge(sortList(head), sortList(mid));
+    }
+};
+ 
