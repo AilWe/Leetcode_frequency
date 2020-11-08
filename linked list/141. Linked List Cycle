@@ -27,7 +27,7 @@ public:
         
     }
 };
-//快指针慢指针，慢指针需要环-1的时间才能追上慢指针
+//快指针慢指针，慢指针需要环-1的时间才能追上慢指针，p: slow pointer steps; q: q nodes in cycle;（2t-p-1)%q = (t-p-1)%q
 /**
  * Definition for singly-linked list.
  * struct ListNode {
