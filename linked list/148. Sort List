@@ -1,0 +1,16 @@
+Insertion Sort: 
+  array T: O(n^2) S: O(1)
+  list T: O(n^2) S: O(1)
+Heap Sort:
+  array T:O(nlogn) S:O(1)
+  list T:O(nlogn) S:O(n)
+  list T:O(n^2logn) S:O(1)
+Quick Sort:
+  array T:O(nlogn) - O(n^2) S:O(logn) - O(n)
+  list T:O(nlogn) - O(n^2) S:O(logn) - O(n)
+Merge Sort(top down) 
+  array T: O(nlogn) S: O(n+logn)
+  list T: O(nlogn) S: O(logn)
+Merge Sort(bottom up)
+  array T: O(nlogn) S: O(n)
+  list T: O(nlogn) S: O(n)
