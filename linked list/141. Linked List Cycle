@@ -27,3 +27,31 @@ public:
         
     }
 };
+//快指针慢指针
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+       //快慢指针
+       //faster pointer: p/2 steps; slow pointer: p steps
+       //快指针可以追上慢指针
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast){
+            if(fast->next == NULL) return false;
+            fast = fast -> next -> next;
+            slow = slow -> next;
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+    }
+};
