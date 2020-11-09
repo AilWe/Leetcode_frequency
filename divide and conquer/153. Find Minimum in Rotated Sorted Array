@@ -15,7 +15,7 @@ private:
     int findMin(const vector<int> &nums, int l, int r){
         //only one or two number left
         if(l+1>=r) return min(nums[l],nums[r]);
-        //sorted
+        //sorted, could <=
         if(nums[l]<=nums[r]) return nums[l];
         
         int mid = l + (r-l)/2;
