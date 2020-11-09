@@ -1,3 +1,15 @@
+//divide and conquer
+分成两半，有一半排序过
+findMin(array)
+    if is_sorted(array):
+        return array[0];
+    return min(finMin(array[0:mid-1]). findMin(array[mid:n]))    
+ 例 4567012
+ 456（sort） 7012（no sort）
+ 4,        70(no sort),               12(sort)
+ 4,             0,                      1
+ //Time Complexity: O(logn)
+ //Space: 用指针，O（logn）
 //Transverse to find the minimum number
 //T: O(n)
 class Solution {
