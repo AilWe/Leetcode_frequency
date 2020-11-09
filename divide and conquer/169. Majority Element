@@ -1,0 +1,132 @@
+169. Majority Element
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+1.counting based:
+ 1.Hash Table(unordered_map) T:O(n); S:O(n)
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          unordered_map<int, int> count;
+          const int n = nums.size();
+          for(const int num: nums){
+              if(++count[num]>n/2) return num;
+          }
+          return -1;
+      }
+  };
+ 2.BST(map): T:O(nlogK); S:O(n) K is the number of different number
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          map<int, int> count;
+          const int n = nums.size();
+          for(const int num: nums){
+              if(++count[num]>n/2) return num;
+          }
+          return -1;
+      }
+  };
+2.Randomization: T:O(n), S:O(1)
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        srand(time(nullptr));
+        const int n = nums.size();
+        while(true){
+            const int index = rand()%n;
+            const int majority = nums[index];
+            int count = 0;
+            for(const int num:nums)
+                if(num == majority && ++count>n/2) return num;
+        }
+        return -1;
+    }
+};
+3.vote based:
+  1.Bit vote: T: O(32*n), S:O(1)
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          const int n = nums.size();
+          int majority = 0;
+          for(int i = 0; i<32; ++i){
+              int mask = 1 <<i;
+              int count = 0;
+                  for (const int num: nums)
+                      if(num & mask) ++count;
+              if(count > n/2) majority |= mask;
+          }
+          return majority;
+      }
+  };
+  2.Boyer-Moore vote T:O(n), S:O(1)
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          int majority = nums.front();
+          int count = 0;
+          for(const int num: nums){
+              if(num == majority)++count;
+              else if(--count == 0){
+                  count = 1;
+                  majority = num;
+              }
+          }
+          return majority;
+      }
+  };
+4.sorting based:
+  1. Full sorting: T:O(nlogn); S:O(1) median always me
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          sort(nums.begin(), nums.end());
+          return nums[nums.size()/2];
+      }
+  };
+  2. Partial sorting/partition: T:O(n) on average; S:O(1)
+  class Solution {
+  public:
+      int majorityElement(vector<int>& nums) {
+          nth_element(nums.begin(),nums.begin()+nums.size()/2, nums.end());
+          return nums[nums.size()/2];
+      }
+  };
+5. Divide and conquer: T:O(n)~O(nlogn) S:O(logn)
+  class Solution {
+  public:
+      int majorityElement(const vector<int>& nums, int l, int r){
+          if(l == r) return nums[l];
+          const int m = l+(r-l)/2;
+          const int ml = majorityElement(nums, l, m);
+          const int mr = majorityElement(nums,m+1,r);
+          if(ml == mr) return ml;
+          return count(nums.begin()+l,nums.begin()+r+1,ml) > count(nums.begin()+l,nums.begin()+r+1,ml)? ml:mr;
+      }
+      int majorityElement(vector<int>& nums) {
+          return majorityElement(nums,0, nums.size()-1);
+
+      }
+  };
+  //faster to count the frequency
+ class Solution {
+public:
+    pair<int,int> majorityElement(const vector<int>& nums, int l, int r){
+        if(l == r) return {nums[l],1};
+        int m = l+(r-l)/2;
+        auto ml = majorityElement(nums, l, m);
+        auto mr = majorityElement(nums,m+1,r);
+        if(ml.first == mr.first) return {ml.first, ml.second+mr.second};
+        if(ml.second>mr.second)
+            return {ml.first, ml.second + count(nums.begin()+m+1,nums.begin()+r+1, ml.first)};
+        else
+            return{mr.first, mr.second + count(nums.begin()+l,nums.begin()+m+1, mr.first)};
+    }
+        
+    int majorityElement(vector<int>& nums) {
+        return majorityElement(nums,0, nums.size()-1).first;
+       
+    }
+};
+  
