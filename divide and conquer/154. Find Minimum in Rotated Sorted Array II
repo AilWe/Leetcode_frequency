@@ -11,6 +11,7 @@ public:
     int finMin(const vector<int> & nums, int l, int r){
         //only two numbers
         if(l+1>=r) return min(nums[l], nums[r]);
+        //sorted, must <
         if(nums[l]<nums[r]) return nums[l];
         int mid = l + (r-l)/2;
         return min(finMin(nums,l,mid-1),finMin(nums,mid,r));
