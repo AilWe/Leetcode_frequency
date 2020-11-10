@@ -1,7 +1,7 @@
 /*Given a binary search tree with non-negative values, find the minimum absolute difference between values of any two nodes.*/
 //vector
 class Solution {
-    
+//T:O(2*n) S:O(n)
 public:
     vector <int> vt;
     vector <int> inorder(TreeNode* root){
@@ -27,6 +27,7 @@ public:
     }
 };
 //recursive with inorder
+//T:O(n); S:O(1)
 class Solution {
     int minimul = INT_MAX;
     TreeNode* prev = NULL;
