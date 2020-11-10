@@ -6,7 +6,22 @@ Assume a BST is defined as follows:
 The left subtree of a node contains only nodes with keys less than the node's key.
 The right subtree of a node contains only nodes with keys greater than the node's key.
 Both the left and right subtrees must also be binary search trees.
-//inorder, order number
+//Solution2: inorder, order number
+class Solution {
+    private:
+    TreeNode* prev;
+    bool inorder(TreeNode* root){
+        if(root == NULL) return true;
+        if(!inorder(root->left)) return false;
+        if(prev&&root-> val <= prev-> val) return false;
+        prev = root;
+        return inorder(root->right);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        return inorder(root);
+    }
+};
 //Solution1: limit the value range for the sub trees
 //左子树比根小，右子树比根大
 class Solution {
