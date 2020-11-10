@@ -23,7 +23,7 @@ public:
         if (left > right) return NULL;
         //always choose left middle as a root
         int p = (left+right)/2;
-        //Preorder traversal: node -> left -> right
+        //inorder traversal:  left -> root -> right
         TreeNode *root = new TreeNode(nums[p]);
         root -> left = newTree(left, p-1, nums);
         root -> right = newTree(p+1, right, nums);
