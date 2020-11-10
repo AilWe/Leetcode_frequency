@@ -55,7 +55,7 @@ int main(){
     std::cout << & sum;
     return 0;
 }
-//recursive
+//recursive T:O(logn~n)S:O(logn~n)
 #include <iostream>
 #include <queue>
 struct TreeNode{
