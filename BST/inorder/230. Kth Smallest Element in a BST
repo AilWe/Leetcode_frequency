@@ -1,0 +1,37 @@
+//
+class Solution {
+    private:
+    int inorder(TreeNode* root, int& k){
+        if(!root) return -1;
+        int x = inorder(root->left,k);
+        if(k==0) return x;
+        if(--k==0) return root->val;
+        return inorder(root->right,k);
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        return inorder(root,k);
+    
+    }
+};
+//建全局变量，environmental variable
+class Solution {
+    private:
+    int num;
+    int count;
+    void inorder(TreeNode* root){
+        if(!root) return;
+        inorder(root->left);
+        //cout << count <<endl;
+        if(count==1)  num = root->val;
+        count--;
+        inorder(root->right); 
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        count = k;
+        inorder(root);
+        return num;
+    
+    }
+};
