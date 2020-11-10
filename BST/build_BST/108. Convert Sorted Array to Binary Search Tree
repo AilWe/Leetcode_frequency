@@ -5,7 +5,7 @@ Given the sorted array: [-10,-3,0,5,9],
 Time complexity: O(N) since each node visit once
 Space complexity: O(N) to keep the output, O(logN) for the recursive stack
 */
-//Preorder Traversal: Always Choose Left Middle Node as a Root
+//inorder Traversal: Always Choose Left Middle Node as a Root
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -41,7 +41,7 @@ int main(){
     TreeNode* address = a.sortedArrayToBST(nums);
     std::cout << address << std::endl;
 }
-//Preorder Traversal: Always Choose Right Middle Node as a Root
+//inorder Traversal: Always Choose Right Middle Node as a Root
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -81,7 +81,7 @@ int main(){
     std::cout << address << std::endl;
 }
 //
-Approach 3: Preorder Traversal: Choose Random Middle Node as a Root
+Approach 3: inorder Traversal: Choose Random Middle Node as a Root
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
