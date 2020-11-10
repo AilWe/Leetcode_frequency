@@ -1,0 +1,24 @@
+Recover Binary Search Tree
+You are given the root of a binary search tree (BST), where exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
+//recursive
+class Solution {
+private:
+    TreeNode* first = nullptr;
+    TreeNode* second = nullptr;
+    TreeNode* prev = nullptr;
+    void inorder(TreeNode* root){
+        if(root == NULL) return;
+        inorder(root->left);
+        if(prev&& prev->val >= root-> val) {
+            if(!first) first =prev;
+            second = root;
+        };
+        prev = root;
+        inorder(root->right);
+    }
+public:
+    void recoverTree(TreeNode* root) {
+        inorder(root);
+        swap(first-> val, second-> val);
+    }
+};
