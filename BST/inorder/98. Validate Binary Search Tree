@@ -21,3 +21,17 @@ public:
         
     }
 };
+//避免hardcode，用指针
+class Solution {
+    private:
+    bool isValidBST(TreeNode* root, int* maxValue, int* minValue){
+        if(root == NULL) return true;
+        if((maxValue && root->val >= *maxValue) || (minValue && root->val <= *minValue)) return false;
+        return isValidBST(root->left, &root-> val, minValue) && isValidBST(root->right, maxValue, &root->val);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root, nullptr, nullptr);
+        
+    }
+};
