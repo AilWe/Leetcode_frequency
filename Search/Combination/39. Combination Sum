@@ -1,0 +1,32 @@
+Permutation(用dfs产生排列数)
+P(nums,d(递归深度),n, used, curr, ans):
+if d == n://已经取出了d个数
+  ans.append(curr)
+  return
+ for i = 0 to len(nums):
+  if used[i]: continue
+  used[i] = True
+  curr.push(nums[i])
+  P(nums,d+1, n, curr, ans)
+  curr.pop()
+  used[i] = False
+P(len(nums),n)
+P([1,2,3],0,3,[False]*3,[], ans)
+[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+P([1,2,3],0,2,[False]*3,[], ans)
+[[1,2],[1,3],[2,1],[2,3],[3,1],[3,2]]
+Combination（用dfs产生组合）
+C(nums,d,n,s,curr, ans)://从第几个元素开始取
+  if d==n:
+    ans.append(curr)
+    return
+  for i = s to len(nums)
+    curr.push(nums[i])
+    C(nums, d+1, n, i+1, curr, ans)//i+1保证不会取到重复元素
+    curr.pop()
+C([1,2,3], 0, 3, [], ans)
+[[1,2,3]]
+
+C([1,2,3], 0, 2, [], ans)
+[[1,2],[1,3],[2,3]]
+    
