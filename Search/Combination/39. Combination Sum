@@ -51,4 +51,29 @@ public:
         }
     }
 };
+//配合数字排列
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector <int> curr;
+        vector <vector<int>> ans;
+        sort(candidates.begin(), candidates.end());
+        for(int n=1; n<= target/candidates[0];++n)
+            combination(candidates, target, 0, 0 , n, curr, ans);
+        return ans;
+    }
+    void combination(vector<int>& candidates, int target, int s, int d, int n,vector <int> &curr, vector <vector<int>> &ans){
+        if(d==n){
+        if(target == 0){
+            ans.push_back(curr);}
+            return;
+        }
+        for(int i = s; i< candidates.size(); ++i){
+            if(candidates[i]>target) break;
+            curr.push_back(candidates[i]);
+            combination(candidates, target - candidates[i], i, d+1,n, curr, ans);
+            curr.pop_back();
+        }
+    }
+};
     
