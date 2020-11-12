@@ -1,0 +1,30 @@
+40. Combination Sum II
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+Each number in candidates may only be used once in the combination.
+//How to remove duplicates?
+//Set
+//Disallow same number in same depth
+//T: O(2^n) S: O(kn)
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector <int> curr;
+        set <vector<int>> ans;
+        sort(candidates.begin(),candidates.end());
+        dfs(candidates, target, 0, curr, ans);
+        return vector <vector<int>>(ans.begin(), ans.end());
+    }
+    void dfs(const vector<int> &candidates, int target, int s, vector<int> &curr, set <vector<int>> &ans){
+        if(target == 0) {
+            ans.insert(curr);
+            return;
+        }
+        for(int i = s; i< candidates.size(); ++i){
+            if(candidates[i]> target) break;
+            curr.push_back(candidates[i]);
+            dfs(candidates, target-candidates[i], i+1,curr, ans);
+            curr.pop_back();
+        }
+    }
+};
