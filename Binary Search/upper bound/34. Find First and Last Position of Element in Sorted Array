@@ -56,7 +56,7 @@ private:
         while(l<r){
             int m = l+(r-l)/2;
             
-            if(nums[m] >= target){
+            if(nums[m] >= target){//the 1st number of target 
                 r = m;
             }
             else{
@@ -72,7 +72,7 @@ private:
         while(l<r){
             int m = l+(r-l)/2;
             cout << m << endl;
-            if(nums[m]> target){
+            if(nums[m]> target){//the 1st number larger than target
                 r = m;
             }
             else{
