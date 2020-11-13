@@ -1,0 +1,50 @@
+33. Search in Rotated Sorted Array
+You are given an integer array nums sorted in ascending order, and an integer target.
+
+Suppose that nums is rotated at some pivot unknown to you beforehand (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
+
+If target is found in the array return its index, otherwise, return -1.
+class Solution {
+    int ans = -1;
+public:
+    int search(vector<int>& nums, int target) {
+        divide(nums, target, 0, nums.size() - 1);
+        return ans;
+    }
+private:
+    int bs(vector<int> &nums, int target, int l, int r){
+        while(l<r){
+            int m = l+(r-l)/2;
+            //cout << "mid" << m << endl;
+            if(nums[m] == target){return m;}
+            if(target < nums[m])
+                r = m;
+            else
+                l = m+1;
+        }
+        return -1;
+    }
+    void divide(vector<int> &nums, int target, int l, int r){
+        //cout << l << r<< endl;
+        if(l+1>=r){
+            if (nums[l] == target) ans = l;
+            if (nums[r]== target) ans = r;
+            return;
+        }
+        if(nums[l]< nums[r]){
+            int subans = bs(nums, target, l,r+1);
+            //cout << subans<< endl;
+            if(subans != -1 ){
+                ans = subans;
+            }
+            return;
+        }
+        int m = l+(r-l)/2;
+        if(nums[m] == target){
+            ans = m;
+            return;
+        }
+        divide(nums, target, l,m-1);
+        divide(nums, target,m+1,r);
+    }
+};
