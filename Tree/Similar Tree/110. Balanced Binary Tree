@@ -24,3 +24,25 @@ private:
         return max(l,r)+1;
     }
 };
+//O(n)
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL) return true;
+        bool balanced = true;
+        searchheight(root,&balanced);
+        return balanced;
+        
+    }
+private:
+    int searchheight(TreeNode* root, bool* balanced){
+        if(root == NULL) return 0;
+        int l = searchheight(root->left, balanced);
+        int r = searchheight(root->right, balanced);
+        if(abs(l-r)>1){
+            *balanced = false;
+            return -1;
+        }
+        return max(l,r)+1;
+    }
+};
