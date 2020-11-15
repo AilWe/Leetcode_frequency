@@ -1,0 +1,19 @@
+A binary tree is univalued if every node in the tree has the same value.
+
+Return true if and only if the given tree is univalued.
+class Solution {
+    int rootval = -1;
+public:
+    bool isUnivalTree(TreeNode* root) {
+        if(root->left == NULL && root->right == NULL) return true;
+        rootval = root->val;
+        return isUnivalTree(root, rootval);
+        ;
+        
+    }
+    bool isUnivalTree(TreeNode* root, int rootval){
+        if(root == NULL) return true;
+        if(root->val != rootval) return false;
+        return isUnivalTree(root->left,rootval) &&isUnivalTree(root->right, rootval);
+    }
+};
