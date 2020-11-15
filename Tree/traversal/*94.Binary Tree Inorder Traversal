@@ -1,0 +1,36 @@
+/*94.Binary Tree Inorder Traversal Given a binary tree, return the inorder traversal of its nodes’ values.*/
+class Solution {
+    
+public:
+    void inorderTraversal(TreeNode* root, vector<int> &ans){
+        if(root == nullptr) return;
+        inorderTraversal(root->left, ans);
+        ans.push_back(root->val);
+        inorderTraversal(root->right, ans);
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector <int> ans;
+        inorderTraversal(root, ans);
+        return ans;
+        
+    }
+};
+class Solution {
+    vector <int> vt;
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        if(root == NULL) return {};
+        stack <TreeNode*> s;
+        TreeNode* curr = root;
+        while(curr!= NULL || !s.empty()){
+            while(curr!=NULL){
+                s.push(curr);
+                curr = curr -> left;
+            }
+            curr = s.top(); s.pop();
+            vt.push_back(curr->val);
+            curr = curr-> right;
+        }
+        return vt;
+    }
+};
