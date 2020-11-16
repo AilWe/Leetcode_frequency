@@ -22,7 +22,7 @@ public:
         return root;
     }
      TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-         return makeMBT(nums, 0, nums.size());
+         return makeMBT(nums, 0, nums.size());//保持左开右闭很重要
      }
 };
 //normal method
