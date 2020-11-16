@@ -1,0 +1,28 @@
+1382. Balance a Binary Search Tree
+Given a binary search tree, return a balanced binary search tree with the same node values.
+
+A binary search tree is balanced if and only if the depth of the two subtrees of every node never differ by more than 1.
+
+If there is more than one answer, return any of them.
+class Solution {
+public:
+    TreeNode* balanceBST(TreeNode* root) {
+        vector<int> ans;
+        inorder(root, ans);
+        return buildBST(ans, 0, ans.size());
+    }
+    void inorder(TreeNode* root, vector<int> &ans){
+        if(root == NULL) return;
+        inorder(root->left, ans);
+        ans.push_back(root->val);
+        inorder(root->right, ans);
+    }
+    TreeNode* buildBST(vector<int> &ans, int l, int r){
+        if(l>= r) return NULL;
+        int m = l + (r-l)/2;
+        TreeNode* root = new TreeNode(ans[m]);
+        root->left = buildBST(ans, l, m);
+        root->right = buildBST(ans, m+1, r);
+        return root;
+    }
+};
