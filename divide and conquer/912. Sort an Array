@@ -1,0 +1,23 @@
+912. Sort an Array
+Given an array of integers nums, sort the array in ascending order.
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        quickSort(nums, 0,nums.size()-1);
+        return nums;
+    }
+    void quickSort(vector<int> &nums, int l, int r){
+        if(l>=r) return;
+        int i = l;
+        int j = r;
+        int p = nums[l+rand()%(r-l+1)];//pick a random number as pivot
+        while(i<= j){
+            while(nums[i] < p) ++i;//if nums[i]<p, increase index i
+            while(nums[j]>p) --j;//if(nums[j]>p), decrease index j
+            if(i<=j)//如果大的在左，小的在右，则交换
+                swap(nums[i++],nums[j--]);
+        }
+        quickSort(nums, l, j);
+        quickSort(nums, i, r);
+    }
+};
