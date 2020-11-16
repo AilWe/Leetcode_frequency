@@ -14,7 +14,7 @@ class Solution {
 public:
     TreeNode* makeMBT(vector<int>& nums, int begin, int end) {
         if(begin>=end) return NULL;
-        auto val = max_element(nums.begin()+begin,nums.begin()+end);
+        auto val = max_element(nums.begin()+begin,nums.begin()+end);//max_element是一个左开右闭的函数
         TreeNode* root = new TreeNode(*val);
         int index = val - nums.begin();
         root->left = makeMBT(nums,begin,index);
