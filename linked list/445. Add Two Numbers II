@@ -1,0 +1,32 @@
+445. Add Two Numbers II
+You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        stack<int> s1;
+        while(l1!=NULL){
+            s1.push(l1->val);
+            l1 = l1->next;
+        }
+        stack<int> s2;
+        while(l2!=NULL){
+            s2.push(l2->val);
+            l2 = l2->next;
+        }
+        int sum = 0;
+        ListNode *tmphead = NULL;
+        while(!s1.empty()||!s2.empty()||sum!=0){
+            sum = (s1.empty()?0:s1.top())+(s2.empty()?0:s2.top())+sum;
+            //cout << sum << endl;
+            if(!s1.empty()) s1.pop();
+            if(!s2.empty()) s2.pop();
+            ListNode*curr = new ListNode(sum%10);//while内的指针不会带到外面去
+            sum = sum / 10;
+            curr-> next = tmphead;
+            tmphead = curr;
+        }
+        return tmphead;
+    }
+};
