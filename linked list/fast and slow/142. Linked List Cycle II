@@ -4,6 +4,33 @@ There is a cycle in a linked list if there is some node in the list that can be 
 
 Notice that you should not modify the linked list.
 //fast and slow pointer
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head == NULL) return NULL;
+        ListNode *encounter = NULL;
+        ListNode *fast = head;
+        ListNode *slow = head;
+        while(fast!= NULL && fast->next != NULL){
+            fast = fast -> next ->next;
+            slow = slow ->next;
+            if(fast == slow){
+                encounter = fast;
+                //cout << encounter->val;
+                break;
+            }   
+        }
+        if(!encounter) return NULL;
+        ListNode* n1 =  head;
+        ListNode* n2 = encounter;
+        //cout << n1->val << n2->val<<endl;
+        while(n1!=n2){
+            n1 = n1->next;
+            n2 = n2->next;
+        } 
+        return n1;
+    }
+};
 //hashtable
 class Solution {
 public:
