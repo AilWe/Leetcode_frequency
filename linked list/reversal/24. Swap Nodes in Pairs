@@ -1,0 +1,35 @@
+24. Swap Nodes in Pairs
+Given a linked list, swap every two adjacent nodes and return its head.
+
+You may not modify the values in the list's nodes. Only nodes itself may be changed.
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head == NULL) return NULL;
+        if(head->next==NULL) return head;
+        ListNode *Next1;
+        ListNode *Next2;
+        ListNode *prev = head;
+        ListNode *curr = head->next;
+        ListNode dummy(0);
+        dummy.next = head->next;
+        while(curr){
+            Next1 = curr->next;
+            if(curr->next)
+                Next2 = curr->next->next;
+            else
+                Next2 = NULL;
+            curr->next = prev;
+            
+            prev = Next1;
+            if(Next2)
+                curr->next->next = Next2;
+            else curr->next->next = Next1;
+            if(Next2)
+                curr = Next2;
+            else
+                curr =Next1;
+        }
+        return dummy.next;
+    }
+};
