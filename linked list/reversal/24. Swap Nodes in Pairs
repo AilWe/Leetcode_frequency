@@ -5,6 +5,25 @@ You may not modify the values in the list's nodes. Only nodes itself may be chan
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
+        if(!head||!head->next) return head;
+        ListNode dummy(0);
+        dummy.next = head;
+        head = &dummy;
+        //cout << head->val;
+    while(head && head->next && head->next->next){
+        auto n1 = head->next;
+        auto n2 = n1->next;
+        n1->next = n2 ->next;
+        n2->next = n1;
+        head->next = n2;
+        head = n1;  
+    }
+        return dummy.next;
+    }
+};
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
         if(head == NULL) return NULL;
         if(head->next==NULL) return head;
         ListNode *Next1;
