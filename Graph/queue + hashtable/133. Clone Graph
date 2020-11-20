@@ -1,0 +1,29 @@
+Given the head of a graph, return a deep copy (clone) of the graph. Each node in the graph contains a label (int) and a list (List[UndirectedGraphNode]) of its neighbors. There is an edge between the given node and each of the nodes in its neighbors.
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+        if(node == NULL) return NULL;
+        unordered_set <Node*> done;
+        unordered_map<Node*, Node*> m;
+        queue<Node*> q;
+        q.push(node);
+        while(!q.empty()){
+            Node *curr = q.front();
+            q.pop();
+            if(done.count(curr)) continue;
+            done.insert(curr);
+            if(!m.count(curr))
+                m[curr] = new Node(curr->val);
+            Node *t = m[curr];
+            for(Node *next: curr->neighbors){
+                if(!m.count(next)){
+                    m[next] = new Node(next->val);
+                }
+                q.push(next);
+                t->neighbors.push_back(m[next]);
+            }
+        }
+        return m[node];
+        
+    }
+};
