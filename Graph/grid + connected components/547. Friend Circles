@@ -25,3 +25,27 @@ public:
             
         }
 };
+//do not recommend change M and overhead
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        if(M.empty()) return 0;
+        int ans = 0;
+        int n = M.size();
+        for(int i = 0; i <n; ++i){
+            if(M[i][i] == 0) continue;//标记是否在班级里
+            ++ans;
+            dfs(M, i,n);
+        }
+        return ans;
+    }
+        void dfs(vector<vector<int>> &M, int curr, int n){
+
+            for(int i = 0; i < n;++i){
+                if(M[curr][i] == 0) continue;
+                M[curr][i] = M[i][curr] = 0;//自己也会被标记
+                dfs(M, i, n);
+            }
+            
+        }
+    };
