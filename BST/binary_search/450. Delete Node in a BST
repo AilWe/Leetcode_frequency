@@ -5,3 +5,42 @@ Basically, the deletion can be divided into two stages:
 
 Search for a node to remove.
 If the node is found, delete the node
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root == NULL) return root;
+        if(key>root->val){
+            root->right = deleteNode(root->right, key);
+        }
+        else if(key < root->val){
+            root->left =  deleteNode(root->left, key);
+        }
+        else{
+            TreeNode *new_root = NULL;
+            if(root->left == NULL){
+                new_root = root->right;
+            }
+            else if(root->right == NULL){
+                new_root = root->left;
+            }
+            else{
+                //find the min node in the right sub stree
+                TreeNode *parent = root;
+                new_root = root->right;
+                while(new_root->left != NULL){
+                    parent =  new_root;
+                    new_root = new_root->left;
+                }
+                if(parent != root){
+                    parent->left = new_root->right;
+                    new_root->right = root->right;
+                }
+                new_root->left = root->left;
+            }
+            delete root;
+            return new_root;
+            }
+    return root;
+}
+
+};
