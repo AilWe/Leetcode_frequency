@@ -1,0 +1,32 @@
+695. Max Area of Island
+Given a non-empty 2D array grid of 0's and 1's, an island is a group of 1's (representing land) connected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are surrounded by water.
+
+Find the maximum area of an island in the given 2D array. (If there is no island, the maximum area is 0.)
+
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int maxans = 0;
+        int r = grid.size();
+        int c = grid[0].size();
+        for (int x = 0; x< r;++x){
+            for(int y = 0; y <c; ++y){
+                if(grid[x][y] == 1){
+                    int ans = 0;
+                    dfs(grid, ans, x, y, r, c);
+                    maxans = max(maxans, ans);
+                }
+            }
+        }
+        return maxans;
+    }
+    void dfs(vector<vector<int>> &grid, int &ans, int x, int y, int r, int c){
+        if(x<0||y<0||x>=r||y>=c||grid[x][y] == 0) return;
+        ++ans;
+        grid[x][y] = 0;
+        dfs(grid, ans, x+1, y, r, c);
+        dfs(grid, ans, x-1, y, r, c);
+        dfs(grid, ans, x, y+1, r, c);
+        dfs(grid, ans, x, y-1, r, c);
+    }
+};
