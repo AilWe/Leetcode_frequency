@@ -1,0 +1,26 @@
+/*Given an integer array nums, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets.*/
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> curr={};
+        for(int n = 0; n <= nums.size(); ++n){
+            combination_dfs(nums, curr, 0, n, 0, ans);
+        }
+        return ans;
+    }
+    void combination_dfs(vector<int> &nums, vector<int> &curr, int d, int n, int s, vector<vector<int>> &ans){
+        if(d == n){
+            ans.push_back(curr);
+            return;
+        }
+        for(int i = s; i<nums.size(); i++){
+            curr.push_back(nums[i]);
+            combination_dfs(nums, curr, d+1, n, i+1, ans);
+            curr.pop_back();
+        }
+    }
+};
