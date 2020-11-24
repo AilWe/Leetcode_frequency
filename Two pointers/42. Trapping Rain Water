@@ -1,4 +1,10 @@
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+for column_i, the rain can trap:
+r[i] = min(max(h[0-i]),max(h(i~n-1))-h[i]
+ans = sum(r[i])
+Approach 1: brute force
+For each colume, find max of left and right with takes O(n)
+T: O(N^2) S: O(1)
 class Solution {
 public:
     int trap(vector<int>& height) {
