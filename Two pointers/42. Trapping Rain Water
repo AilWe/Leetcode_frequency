@@ -5,6 +5,62 @@ ans = sum(r[i])
 Approach 1: brute force
 For each colume, find max of left and right with takes O(n)
 T: O(N^2) S: O(1)
+//TLE
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        const int n = height.size();
+        int ans = 0;
+        auto sit = cbegin(height);//左闭右开
+        auto eit = cend(height);
+        for(int i=0; i<n; ++i){
+            int l = *max_element(sit, sit+i+1);
+            int r = *max_element(sit+i,eit);
+            ans += min(l,r)-height[i];
+        }
+         return ans;
+    }
+};
+Approach 2:DP, prefix max?
+we can pre-computer the max of h[0-i] and h[i~n-1] in O(n)
+l[i]: = max(h[0-i])
+r[i]: = max(h[i~n-1]
+
+l[i] = max(h[i], l[i-1]) i: 0~n-1
+r[i] = max(h[i], r[i+1]) i: n-1
+
+for each column, query the max reduced O(1)
+T: O(n), S: O(n)
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        const int n =height.size();
+        vector<int> l(n);
+        vector<int> r(n);
+        int ans = 0;
+        for(int i = 0; i < n; i++)
+            l[i] =i==0? height[i]:max(l[i-1],height[i]);
+        for(int i = n-1; i>=0;--i)
+            r[i] = i == n-1? height[i]: max(r[i+1],height[i]);
+        for(int i =0; i<n; ++i)
+            ans = ans+min(l[i], r[i]) -height[i];
+        return ans;
+        
+    }
+};
+//Two pointer
+we can use two variable to track the max_l and max_r so far.
+Use l, r to track two sides, move l, r based on whether max_l< max_r. if max_l<max_r, ans depends on max_1, so l++
+while(l<r)
+    if max_l < max_r:
+        ans = ans+max_l-h[l]
+        ++l;
+        max_l = max(max_l, h[l])
+    else:
+        ans = ans+ max_r -h[r]
+        --r;
+        max_r = max(max_r, h[r])
+ T: O(n) S:O(1)       
 class Solution {
 public:
     int trap(vector<int>& height) {
