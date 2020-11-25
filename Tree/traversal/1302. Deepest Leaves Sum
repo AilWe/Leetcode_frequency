@@ -2,6 +2,28 @@
 class Solution {
 public:
     int deepestLeavesSum(TreeNode* root) {
+        int ans = 0;
+        int deepest = 0;
+        deepestleaves(root, 0, ans, deepest);
+        return ans;
+    }
+
+    void deepestleaves(TreeNode* root, int d, int &ans, int& deepest){//只要修改数就需要引用
+        if(root == NULL) return;
+        if(d>deepest){
+            deepest = d;
+            ans = 0;
+        }
+        if(d == deepest){
+            ans = ans + root->val;
+        }
+        deepestleaves(root->left, d+1, ans, deepest);
+        deepestleaves(root->right, d+1, ans, deepest);
+    }
+};
+class Solution {
+public:
+    int deepestLeavesSum(TreeNode* root) {
         if(root == NULL) return 0;
         int deepest = height(root);
         int ans = 0;
