@@ -33,3 +33,22 @@ public:
         ans.push_back(root->val);
     }
 };
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        if(root == NULL) return {};
+        deque<int> ans;
+        stack<Node*> s;
+        Node* curr = NULL;
+        s.push(root);
+        while(!s.empty()){
+            curr = s.top();
+            s.pop();
+            //cout << curr->val;
+            ans.push_front(curr->val);
+            for(auto child:curr->children)
+                s.push(child);
+        }
+        return vector<int> (ans.begin(), ans.end());
+    }
+};
