@@ -38,3 +38,27 @@ public:
         }
     }
 };
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        if(root == NULL) return {};
+        vector<vector<int>> ans;
+        queue <Node*> q;
+        q.push(root);
+        int d = 0;
+        while(!q.empty()){
+            int size = q.size();
+            ans.push_back({});
+            while(size>0){
+                Node* curr = q.front(); q.pop();
+                ans[d].push_back(curr->val);
+                for(auto child: curr->children){
+                    q.push(child);
+                }
+                size--;
+            }
+            ++d;
+        }
+        return ans;
+    }
+};
