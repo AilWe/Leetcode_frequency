@@ -1,0 +1,25 @@
+1302. Deepest Leaves Sum
+class Solution {
+public:
+    int deepestLeavesSum(TreeNode* root) {
+        if(root == NULL) return 0;
+        int deepest = height(root);
+        int ans = 0;
+        deepestleaves(root, 1, ans, deepest);
+        return ans;
+    }
+    int height(TreeNode* root){
+        if(root == NULL) return 0;
+        int hl = height(root->left);
+        int hr = height(root->right);
+        return max(hl,hr)+1;
+    }
+    void deepestleaves(TreeNode* root, int d, int &ans, int deepest){
+        if(root == NULL) return;
+        if(d == deepest){
+            ans = ans + root->val;
+        }
+        deepestleaves(root->left, d+1, ans, deepest);
+        deepestleaves(root->right, d+1, ans, deepest);
+    }
+};
