@@ -21,7 +21,7 @@ public:
     }
     void preorder(TreeNode* root, int d, vector<vector<int>> &ans){
         if (root == NULL) return;
-        if(d>=ans.size()){
+        while (d>=ans.size()){
             ans.push_back({});
         }
         ans[d].push_back(root->val);
