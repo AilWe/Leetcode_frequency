@@ -46,3 +46,19 @@ public:
         return ans;
     }
 };
+class Solution {
+public:
+    vector<vector<int>> levelOrder(Node* root) {
+        vector<vector<int>> ans;
+        preorder(root, 0, ans);
+        return ans;
+    }
+    void preorder(Node* root, int d, vector<vector<int>> &ans){
+        if(root == NULL ) return;
+        if(d>=ans.size())  ans.push_back({});
+        ans[d].push_back(root->val);
+        for(auto child: root->children){
+            preorder(child, d+1, ans);
+        }
+    }
+};
