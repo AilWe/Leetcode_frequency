@@ -29,3 +29,29 @@ public:
         preorder(root->right, d+1, ans);
     }
 };
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root == NULL) return {};
+        vector<vector<int>> ans;
+        queue <TreeNode*> q;
+        TreeNode* curr = NULL;
+        int depth = 0;
+        q.push(root);
+        while(!q.empty()){
+            int size = q.size();
+            if(depth >= ans.size()){
+                ans.push_back({});
+            }
+            while(size--){
+                curr = q.front();
+                q.pop();
+                ans[depth].push_back(curr->val);
+                if(curr->left) q.push(curr->left);
+                if(curr->right) q.push(curr->right);
+            }
+            ++depth;
+        }
+        return ans;
+    }
+};
