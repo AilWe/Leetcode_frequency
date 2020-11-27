@@ -1,0 +1,7 @@
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        multiset<int> s(nums.begin(), nums.end());
+        return {s.begin(), s.end()};
+    }
+};
