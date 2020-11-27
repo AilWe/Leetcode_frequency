@@ -1,5 +1,9 @@
 /*计数排序的基本思想是对于给定的输入序列中的每一个元素x，确定该序列中值小于x的元素的个数（此处并非比较各元素的大小，而是通过对元素值的计数和计数值的累加来确定）。一旦有了这个信息，就可以将x直接存放到最终的输出序列的正确位置上。例如，如果输入序列中只有17个元素的值小于x的值，则x可以直接存放在输出序列的第18个位置上。
 用空间换取时间的算法*/
+//Time complexity: O(n)
+//Space complexity: O(max(nums) – min(nums))
+
+
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
