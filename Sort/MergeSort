@@ -1,0 +1,33 @@
+/*
+归并操作的工作原理如下：
+第一步：申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列
+第二步：设定两个指针，最初位置分别为两个已经排序序列的起始位置
+第三步：比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置
+重复步骤3直到某一指针超出序列尾
+将另一序列剩下的所有元素直接复制到合并序列尾
+*/
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        vector<int> t(nums.size());
+        mergeSort(t,nums, 0, nums.size());
+        return nums;
+    }
+    void mergeSort(vector<int> &t,vector<int> &nums, int l, int r){
+        if(l+1>=r) return;
+        int m = l+(r-l)/2;
+        mergeSort(t,nums,l,m);
+        mergeSort(t,nums,m, r);
+        int i1 = l;
+        int i2 = m;
+        int index = 0;
+        while(i1<m || i2<r){
+            if(i2==r||(i1<m&&nums[i1]<nums[i2]))
+                t[index++] = nums[i1++];
+            else
+                t[index++] = nums[i2++];
+        }
+        copy(t.begin(), t.begin()+index, nums.begin()+l);
+        
+    }
+};
