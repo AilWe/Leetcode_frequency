@@ -1,1 +1,33 @@
 23. Merge k Sorted Lists
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size()==0) return NULL;
+        auto comp = [](ListNode *a, ListNode *b){
+            return a->val > b->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, decltype (comp)> q(comp);
+        ListNode dummy(0);
+        ListNode* curr = &dummy;
+        for(int i = 0; i< lists.size(); ++i){
+            if(lists[i]) q.push(lists[i]);
+        }
+        while(!q.empty()){
+            curr->next = q.top();
+            curr = curr->next;
+            q.pop();
+            if(curr->next) q.push(curr->next);
+        }
+        return dummy.next;
+    }
+};
