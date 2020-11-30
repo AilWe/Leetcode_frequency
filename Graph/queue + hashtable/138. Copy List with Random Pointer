@@ -1,0 +1,36 @@
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+
+The Linked List is represented in the input/output as a list of n nodes. Each node is represented as a pair of [val, random_index] where:
+
+val: an integer representing Node.val
+random_index: the index of the node (range from 0 to n-1) where random pointer points to, or null if it does not point to any node.
+public:
+    Node* copyRandomList(Node* head) {
+        if(head == NULL) return NULL;
+        unordered_set <Node*> visited;
+        unordered_map <Node*, Node*> mp;
+        queue <Node*> q;
+        Node* curr = NULL;
+        q.push(head);
+        while(!q.empty()){
+            curr = q.front();
+            q.pop();
+            if(visited.count(curr)) continue;
+            visited.insert(curr);
+            if(!mp.count(curr))
+                mp[curr] = new Node(curr->val);
+            Node* t = curr;
+            if(!mp.count(curr->next) && curr->next)
+                mp[curr->next] = new Node(curr->next->val);
+            if(curr->next) q.push(curr->next);
+            mp[curr]->next = mp[curr->next];
+            if(!mp.count(curr->random) && curr->random)
+                mp[curr->random] = new Node(curr->random->val);
+            if(curr->random) q.push(curr->random);
+            mp[curr]->random = mp[curr->random];
+        }
+        return mp[head];
+    }
+};
