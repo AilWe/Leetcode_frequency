@@ -6,6 +6,8 @@ The Linked List is represented in the input/output as a list of n nodes. Each no
 
 val: an integer representing Node.val
 random_index: the index of the node (range from 0 to n-1) where random pointer points to, or null if it does not point to any node.
+//T: O(n) S:O(n)
+class Solution {
 public:
     Node* copyRandomList(Node* head) {
         if(head == NULL) return NULL;
