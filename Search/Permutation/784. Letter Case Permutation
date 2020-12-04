@@ -1,0 +1,32 @@
+784. Letter Case Permutation
+//T:O(2^L) S: O(n)+O(n*2^L) stack + sols
+/*
+def dfs(S, i):
+    if i == len(S): ans.append(S)
+    dfs(S, i+1)
+    if S[i] is letter:
+    toggle(S[i]) #S[i] ^= (1<<5)
+    dfs(S, i+1)
+    toggle(S[i]) #S[i] ^= (1<<5)
+    'a' - 'A' = 32
+*/
+class Solution {
+public:
+    vector<string> letterCasePermutation(string S) {
+        vector<string> ans;
+        dfs(S, 0, ans);
+        return ans;
+    }
+private:
+    void dfs(string &S, int d, vector<string> &ans){
+        if(d == S.length()){
+            ans.push_back(S);
+            return;
+        }
+        dfs(S, d+1, ans);
+        if(!isalpha(S[d])) return;
+        S[d] ^= (1<<5);
+        dfs(S, d+1, ans);
+        S[d] ^= (1<<5);
+    }
+};
