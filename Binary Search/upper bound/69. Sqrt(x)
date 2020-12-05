@@ -2,3 +2,27 @@
 Given a non-negative integer x, compute and return the square root of x.
 
 Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
+//Brute force
+T:O(sqrt(x))
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x<=1) return x;
+        for(int s=1; s<= x;++s)
+            if(s>x/s) return s-1;
+        return -1;
+    }
+};
+class Solution {
+public:
+    int mySqrt(int x) {
+        if(x<=1) return x;
+        for(long long s=1; s<= x;++s)
+            if(s*s>x) return s-1;
+        return -1;
+    }
+};
+//Binary search
+//O(logx)
+//Newton's method
+//O(logx)?
