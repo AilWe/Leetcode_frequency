@@ -13,6 +13,7 @@ public:
     }
     int search(vector<int> &nums, int l, int r){
         if(l == r) return l;
+        //两个数不等， 差1，相加会得到小的那个数
         int m = l +(r-l)/2;
         if(nums[m] > nums[m+1])
             return search(nums, l, m);
