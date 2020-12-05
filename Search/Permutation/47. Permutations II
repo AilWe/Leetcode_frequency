@@ -17,7 +17,7 @@ public:
         }
         for(int i = 0; i< nums.size();++i){
             if(used[i] == 1) continue;
-            if(i>0 && nums[i] == nums[i-1]&& used[i-1]==0) continue;
+            if(i>0 && nums[i] == nums[i-1]&& used[i-1]==0) continue;//强剪枝，在主枝中第二次出现相同的数，全部剪掉， 如第一个数出现为第二个1，则全部剪掉
             used[i] = 1;
             curr.push_back(nums[i]);
             dfs(d+1, ans, curr, used, nums);
