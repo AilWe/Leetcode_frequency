@@ -14,9 +14,8 @@ public:
     int search(vector<int> &nums, int l, int r){
         if(l == r) return l;
         int m = l +(r-l)/2;
-        //cout<< l << r<< m<< endl;
-        if(nums[m-1] > nums[m])//下标和这句话相关
-            return search(nums, l, m-1);
-        return search(nums,m,r);
+        if(nums[m] > nums[m+1])
+            return search(nums, l, m);
+        return search(nums,m+1,r);
     }
 };
