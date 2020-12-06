@@ -5,7 +5,7 @@ ans = sum(r[i])
 Approach 1: brute force
 For each colume, find max of left and right with takes O(n)
 T: O(N^2) S: O(1)
-//TLE
+//TLE 
 class Solution {
 public:
     int trap(vector<int>& height) {
