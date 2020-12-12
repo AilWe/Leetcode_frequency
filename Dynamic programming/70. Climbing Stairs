@@ -30,3 +30,20 @@ private:
     }
     vector<int> f_;
 };
+
+//计划递归
+class Solution {
+public:
+    int climbStairs(int n) {
+        f_ = vector<int>(n+1, 0);
+        return numOfSolution(n);
+    }
+private:
+    int numOfSolution(int n){
+        if(n<=1) return 1;
+        if(f_[n] > 0) return f_[n];
+        f_[n] = numOfSolution(n-1)+numOfSolution(n-2);
+        return f_[n];
+    }
+    vector<int> f_;
+};
