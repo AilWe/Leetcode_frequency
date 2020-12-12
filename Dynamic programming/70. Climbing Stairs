@@ -17,6 +17,23 @@ public:
         return f[n];
     }
 };
+//T: O(n); S: O(1)
+class Solution {
+public:
+    int climbStairs(int n) {
+        int two = 1;
+        int one = 1;
+        int curr = 1;
+        //curr = one + two
+        for(int i=2; i<=n; ++i){
+            //保证不会丢失
+            curr = two+ one;
+            two = one;
+            one = curr;
+        }
+        return curr;
+    }
+};
 //无计划递归会TLE
 class Solution {
 public:
