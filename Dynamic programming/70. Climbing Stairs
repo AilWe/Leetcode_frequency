@@ -16,3 +16,17 @@ public:
         return f[n];
     }
 };
+//无计划递归会TLE
+class Solution {
+public:
+    int climbStairs(int n) {
+        f_ = vector<int>(n+1, 0);
+        return numOfSolution(n);
+    }
+private:
+    int numOfSolution(int n){
+        if(n<=1) return 1;
+        return numOfSolution(n-1)+numOfSolution(n-2);
+    }
+    vector<int> f_;
+};
