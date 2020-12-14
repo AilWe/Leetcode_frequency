@@ -19,3 +19,15 @@ private:
         return (left == 0? 1:0) + numberOfPaths(root->left, left) + numberOfPaths(root->right,left);
     }
 };
+class Solution {
+public:
+    int pathSum(TreeNode* root, int sum) {
+        if(!root)  return 0;
+        return numberOfPaths(root, sum) + pathSum(root->left, sum) + pathSum(root->right, sum);
+    }
+private:
+    int numberOfPaths(TreeNode* root, int sum){
+        if(!root) return 0;
+        return (root->val == sum? 1:0) + numberOfPaths(root->left, sum-root->val) + numberOfPaths(root->right,sum-root->val);
+    }
+};
