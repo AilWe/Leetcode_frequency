@@ -26,6 +26,8 @@ public:
         if(root->left == NULL && root->right == NULL){
             if(root->val == sum) {
                 //curr.push_back(root->val);
+                //ans.push_back(curr);
+                //curr.pop_back();
                 ans.push_back(curr);
                 ans.back().push_back(root->val);
                 
