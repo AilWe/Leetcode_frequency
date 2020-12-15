@@ -14,4 +14,22 @@ else:
 ans = max{root.val + max(0, MS(root.left)) + max(0, MS(root.right)}
 
 T: O(n); S: O(H)
+class Solution {
+public:
+    int maxPathSum(TreeNode* root) {
+        if(!root) return 0;
+        int ans = INT_MIN;
+        maxPathSum(root, ans);
+        return ans;
+        
+    }
+    int maxPathSum(TreeNode* root, int &ans){
+        if(root == NULL) return 0;
+        int ls = max(0, maxPathSum(root->left, ans));
+        int rs = max(0, maxPathSum(root->right, ans));
+        int sum = ls+rs+root->val;
+        ans = max(ans, sum);
+        return max(ls,rs)+root->val;
+    }
+};
  
