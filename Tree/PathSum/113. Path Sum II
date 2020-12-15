@@ -13,6 +13,7 @@ Note: A leaf is a node with no children.
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+ //T:O(n)+nofsolution*O(H) 
 class Solution {
 public:
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
