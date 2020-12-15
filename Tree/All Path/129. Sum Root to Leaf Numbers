@@ -27,6 +27,7 @@ public:
         sum = (sum-root->val)/10;
     }
 };
+//T: O(n); S:O(n)
 class Solution {
 public:
     int sumNumbers(TreeNode* root) {
@@ -43,5 +44,24 @@ public:
         }
         else
             ans += num;
+    }
+};
+class Solution {
+public:
+    int sumNumbers(TreeNode* root) {
+        int ans = 0;
+        traverse(root, ans, 0);
+        return ans;
+    }
+    void traverse(TreeNode* root, int &ans, int num){
+        if(root == NULL) return;
+        num = num*10+root->val;
+        if(!root->left && !root->right)
+            ans += num;
+        else{
+            traverse(root->left, ans, num);
+            traverse(root->right, ans, num);
+        }
+            
     }
 };
