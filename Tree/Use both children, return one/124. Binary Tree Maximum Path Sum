@@ -2,3 +2,16 @@
 Given a non-empty binary tree, find the maximum path sum.
 
 For this problem, a path is defined as any node sequence from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+MS(root):= max path sum
+1. root must be used
+2. at most one child can be used
+
+if root is None
+  MS(root) = INT_MIN
+else:
+  MS(root) = root.val+max(MS(root.left), MS(root.right), 0)//0当左子树， 右子树都是负值
+
+ans = max{root.val + max(0, MS(root.left)) + max(0, MS(root.right)}
+
+T: O(n); S: O(H)
+ 
