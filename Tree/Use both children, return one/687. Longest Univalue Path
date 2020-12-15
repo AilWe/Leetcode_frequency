@@ -1,0 +1,7 @@
+Given the root of a binary tree, return the length of the longest path, where each node in the path has the same value. This path may or may not pass through the root.
+
+The length of the path between two nodes is represented by the number of edges between them.
+int univaluePath(TreeNode *root, int *ans)
+1. root must be used
+2. update ans, can used both children
+3. return longest path with only one child
