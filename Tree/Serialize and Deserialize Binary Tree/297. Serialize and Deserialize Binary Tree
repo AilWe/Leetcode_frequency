@@ -1,0 +1,59 @@
+297. Serialize and Deserialize Binary Tree
+Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+1: 1(2 # #)(3 4 # # 5 # #)
+serialize(root)
+  write(root)
+  if root is null: return
+  serialize(root->left)
+  serialize(root->right)
+  
+write(root)
+  if root is null:
+    write('#')
+  else:
+    write(root->val)
+
+deserialize(root)
+  read(root)
+  if root is null: return null
+  root->left = deserialize(root->left)
+  root->right = deserialize(root->right)
+
+read(root)
+  in >> val
+  if val == '#': return null
+  return new TreeNode(stoi(val))
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        ostringstream out;
+        serialize(root, out);
+        return out.str();
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        istringstream in(data);
+        return deserialize(in);
+    }
+private:
+    void serialize(TreeNode *root, ostringstream &out){
+        if(!root){
+            out<<"# ";
+            return;
+        }
+        out << root->val <<" ";
+        serialize(root->left, out);
+        serialize(root->right, out);
+    }
+    TreeNode* deserialize(istringstream &in){
+        string val;
+        in >> val;
+        if(val == "#") return nullptr;
+        TreeNode* root = new TreeNode(stoi(val));
+        root->left = deserialize(in);
+        root-> right = deserialize(in);
+        return root;
+    }
+};
