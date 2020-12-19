@@ -1,0 +1,40 @@
+You are given a string s, and an array of pairs of indices in the string pairs where pairs[i] = [a, b] indicates 2 indices(0-indexed) of the string.
+
+You can swap the characters at any pair of indices in the given pairs any number of times.
+
+Return the lexicographically smallest string that s can be changed to after using the swaps.
+//DFS, TLE
+//10^5 size T< O(nlogn) T: O(nlogn) S: O(n)
+//connected component
+class Solution {
+public:
+    string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+        vector<vector<int>> g(s.length());
+        for(const auto &e:pairs){
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
+        }
+        
+        unordered_set<int> seen;
+        vector<int> idx;
+        string tmp;
+        for(int i = 0; i< s.length();++i){
+            if(seen.count(i)) continue;
+            idx.clear();
+            tmp.clear();
+            dfs(g,s,i,seen,idx,tmp);
+            sort(begin(tmp), end(tmp));
+            sort(begin(idx), end(idx));
+            for(int k = 0; k< idx.size();++k)
+                s[idx[k]] = tmp[k];
+        }
+        return s;
+    }
+    void dfs(vector<vector<int>> g, string s, int cur, unordered_set<int> &seen, vector<int> &idx, string& tmp){
+        if(seen.count(cur)) return;
+        seen.insert(cur);
+        idx.push_back(cur);
+        tmp = tmp+s[cur];
+        for(int nxt:g[cur]) dfs(g,s,nxt,seen,idx,tmp);
+    }
+};
