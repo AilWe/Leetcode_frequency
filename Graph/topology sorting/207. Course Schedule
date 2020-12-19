@@ -4,3 +4,55 @@ There are a total of numCourses courses you have to take, labeled from 0 to numC
 Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
 
 Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+//有向图
+/*
+Topological sorting with DFS O(n)
+
+for each node:
+    if not marked:
+        if(dfs(node) == CYCLE) return CYCLE
+return OK
+
+dfs(node):
+    if node is marked as visited: return OK
+    if node is marked as visiting: return CYCLE
+    make node as visiting
+    for each new_node in node.neighbors:
+        if dfs(new_node) == CYCLE: return CYCLE
+    make node as visited
+    add node to the head of ordered_list
+    return OK
+*/
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+       graph_ = vector<vector<int>>(numCourses);
+        
+        for (const auto &p : prerequisites)
+            graph_[p[0]].push_back(p[1]);
+        
+        //states: 0 = unknown, 1 = visiting, 2 = visited
+        vector<int> v(numCourses, 0);
+        
+        for(int i = 0; i< numCourses; ++i)
+            if(dfs(i,v)) return false;
+        
+        return true;    
+    }
+
+private:
+    vector<vector<int>> graph_;
+    bool dfs(int cur, vector<int> &v){//是否有环
+        if(v[cur] == 1) return true;
+        if(v[cur] == 2) return false;
+        
+        v[cur] = 1;
+        
+        for(const int t: graph_[cur])
+            if(dfs(t,v)) return true;
+        
+        v[cur] = 2;
+        
+        return false;
+    }
+};
