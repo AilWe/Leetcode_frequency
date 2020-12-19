@@ -57,6 +57,10 @@ private:
     }
 };
 //dfs
+Time complexity: O(n^2)
+
+Space complexity: O(n)
+
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
