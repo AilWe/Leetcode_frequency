@@ -8,6 +8,35 @@ Return an array containing all the safe nodes of the graph. The answer should be
 The directed graph has n nodes with labels from 0 to n - 1, where n is the length of graph. The graph is given in the following form: graph[i] is a list of labels j such that (i, j) is a directed edge of the graph, going from node i to node j.
 class Solution {
 public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        vector<int> ans ={};
+        int n = graph.size();
+        // states: 0 = unkonwn, 1 = visiting, 2 = visited
+        vector<int> v(n, 0);
+        
+        for(int i = 0; i < n; ++i)
+            if(dfs(i, v, graph)== false) ans.push_back(i);
+        
+        return ans;
+    }
+    
+private:
+    bool dfs(int cur, vector<int>& v, vector<vector<int>>& graph) {
+        if(v[cur] == 1) return true;
+        if(v[cur] == 2) return false;
+        
+        v[cur] = 1;
+        
+        for(const int t : graph[cur])
+            if(dfs(t, v, graph)) return true;
+        
+        v[cur] = 2;
+        
+        return false;
+    }
+}; 
+class Solution {
+public:
   vector<int> eventualSafeNodes(vector<vector<int>>& graph) {    
     vector<State> states(graph.size(), UNKNOWN);
     vector<int> ans;
