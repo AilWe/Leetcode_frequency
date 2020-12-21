@@ -44,3 +44,16 @@ public:
         return ans;
     }
 };
+//heapsort
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        priority_queue<int> q(nums.begin(), nums.end());
+        deque<int> ans;
+        while(!q.empty()){
+            ans.push_front(q.top());
+            q.pop();
+        }
+        return vector<int> (ans.begin(), ans.end());
+    }
+};
