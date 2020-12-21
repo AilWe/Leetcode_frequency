@@ -1,4 +1,6 @@
 Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+//Time complexity: O(n!)
+//Space complexity: O(n)
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
