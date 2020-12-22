@@ -2,3 +2,22 @@
 On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
 
 Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index 0, or the step with index 1.
+//recursion + memorization
+//T: O(n), S: O(n)
+//dp(n) := min cost to climb to n-th step
+//dp(n) = min(dp(n-1) + cost[n-1], dp(n-2) + cost[n-2])
+//ans = arr(n)
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        vector<int> m(cost.size()+1);
+        return min(dp(cost, m, cost.size()-1), dp(cost, m, cost.size()-2));
+    }
+private:
+    //min cost to climb to i-th step
+    int dp(vector<int> &cost, vector<int> &m, int i){
+        if(i<0) return 0;
+        if(m[i] > 0) return m[i];
+        return m[i] = min(dp(cost, m, i-1), dp(cost, m, i-2))+cost[i];
+    }
+};
