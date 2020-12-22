@@ -10,6 +10,21 @@ Once you pay the cost, you can either climb one or two steps. You need to find m
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
+        vector<int> m(cost.size() + 1);
+        return dp(cost, m, cost.size());
+    }
+private:
+    // min cost to climb to i-th step
+    int dp(vector<int>& cost, vector<int>& m, int i) {
+        if (i <= 1) return 0;        
+        if (m[i] > 0) return m[i];
+        return m[i] = min(dp(cost, m, i - 1) + cost[i - 1], 
+                          dp(cost, m, i - 2) + cost[i - 2]);
+    }
+};
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
         vector<int> m(cost.size()+1);
         return min(dp(cost, m, cost.size()-1), dp(cost, m, cost.size()-2));
     }
@@ -21,3 +36,8 @@ private:
         return m[i] = min(dp(cost, m, i-1), dp(cost, m, i-2))+cost[i];
     }
 };
+//DP
+//T: O(n), S:O(n)->O(1)
+//dp(n) := min cost before leaving n-th step
+//dp(n) = min(dp(n-1), dp(n-2)) + cost[n]
+//ans = min(dp(n-1), dp(n-2))
