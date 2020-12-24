@@ -1,0 +1,24 @@
+455. Assign Cookies
+Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie.
+
+Each child i has a greed factor g[i], which is the minimum size of a cookie that the child will be content with; and each cookie j has a size s[j]. If s[j] >= g[i], we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number
+//O(mlogm + nlogn)
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(), g.end()); // O(glog(g))
+        sort(s.begin(), s.end());//O(mlog(m))
+        int ans = 0;
+        int j = 0;
+        for(int r: g){//O(g)+O(m)
+            while(j<s.size() && s[j]<r){
+                ++j;
+            }
+            if(j<s.size()){
+                ++ans;
+                ++j;
+            }
+        }
+        return ans;
+    }
+};
