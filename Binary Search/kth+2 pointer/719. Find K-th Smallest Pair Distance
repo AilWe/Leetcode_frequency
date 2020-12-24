@@ -23,7 +23,7 @@ public:
         sort(nums.begin(), nums.end());
         const int n = nums.size();
         int l = 0;
-        int r = nums.back() - nums.front(); 
+        int r = nums.back() - nums.front(); //有k个distance是小于等于m的
         while(l<= r){
             int m = l+(r-l)/2;
             int count = 0;
