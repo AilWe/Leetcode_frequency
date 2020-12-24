@@ -1,0 +1,53 @@
+668. Kth Smallest Number in Multiplication Table
+Nearly every one have used the Multiplication Table. But could you find out the k-th smallest number quickly from the multiplication table?
+
+Given the height m and the length n of a m * n Multiplication Table, and a positive integer k, you need to return the k-th smallest number in this table.
+//Brute force(MLE)
+//Generate the table, and find kth element
+//Time: O(m*n)
+//Space: O(m*n) = 0.9 * 4 = 3.6 GB
+
+//Binary Search
+//Target: the k-th element x
+//Find smallest x such that there are at least k elements <= x in the table
+/*
+l = 1, r = m*n +1
+while l<r:
+    x = l+(r-l)//2
+    if lex(x) >= k:
+        r= x
+    else:
+        l = x+1
+return l
+
+def lex(x): # O(m)
+    return sum(min(n,x/i))
+    i = 1..m
+*/
+//Pruning: 1. sum is already >=k, lex(x) >= k is already true
+//2. x/i is already 0, i goes up x/i goes down, sum will not change after that
+//T: O(m * log(m*n))
+//S: O(1) 
+class Solution {
+public:
+    int findKthNumber(int m, int n, int k) {
+        int l = 1;
+        int r = m*n + 1;
+        while(l<r){
+            int x = l+(r-l)/2;
+            if(LEX(m,n,x) >= k)//比如13， 13， 14也满足要求，但是3最小
+                r = x;
+            else
+                l = x+1;
+        }
+        return  l;
+    }
+private:
+    //Return # of elements in the m*n table that are <= x
+    int LEX(int m, int n, int x){
+        int count = 0;
+        for(int i = 1; i<= m;++i)
+            count += min(n, x/i);//和upper_bound一样，包含这个数
+        return count;
+    }
+};
