@@ -9,7 +9,7 @@ class Solution {
 public:
     int smallestDistancePair(vector<int>& nums, int k) {
         sort(nums.begin(), nums.end());
-        const int N = nums.back();
+        const int N = nums.back();//取出最大元素
         vector<int> count(N+1, 0);
         const int n = nums.size();
         for(int i = 0; i<n-1; ++i){
