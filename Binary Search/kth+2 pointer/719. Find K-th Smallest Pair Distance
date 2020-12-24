@@ -1,2 +1,26 @@
 719. Find K-th Smallest Pair Distance
 Given an integer array, return the k-th smallest distance among all the pairs. The distance of a pair (A, B) is defined as the absolute difference between A and B.
+//Brute force/bucket sorting
+//Step1. compute the freq of all pair distances O(n^2)
+//Step2. sort their freq using bucket sort O(n^2)
+//Step3. Find the bucket O(n^2)
+//T: O(n^2), S: O(max(nums))
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        const int N = nums.back();
+        vector<int> count(N+1, 0);
+        const int n = nums.size();
+        for(int i = 0; i<n-1; ++i){
+            for(int j = i+1; j<n; ++j){
+                ++count[nums[j]-nums[i]];
+            }
+        }
+        for(int i = 0; i<N; ++i){
+            k-=count[i];
+            if(k <= 0) return i;
+        }
+        return 0;
+    }
+};
