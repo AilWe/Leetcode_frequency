@@ -1,5 +1,42 @@
 719. Find K-th Smallest Pair Distance
 Given an integer array, return the k-th smallest distance among all the pairs. The distance of a pair (A, B) is defined as the absolute difference between A and B.
+//Binary search + DP
+//sort the nums, and find the smallest distance m such that at least k pairs have distance <=m
+//Binary search m, compute # of pairs whose distances are <= m' in O(n) using DP
+//dp[i] = # of pairs whose distances are <= m' using nums[j]-nums[0..i] as distance, j>i
+//dp[i] = dp[i-1] + (j-i-1), j is the smallest index that nums[j]-nums[i] > m
+//dp[n-2] stores ans
+/*
+l = 0, r = max(nums)
+while l <= r:
+    m = l=(r-l)/2
+    if # of pairs >= k:
+        r = m - 1;
+    else
+        l = m + 1;
+return m
+*/
+//T: O(nlog(max(n, nums))), O(nlogn^2), O(2nlogn); S: O(n)->O(1)
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        const int n = nums.size();
+        int l = 0;
+        int r = nums.back() - nums.front(); 
+        while(l<= r){
+            int m = l+(r-l)/2;
+            int count = 0;
+            int j = 0;
+            for(int i = 0; i<n; ++i){
+                while(j<n && nums[j] - nums[i] <=m) ++j;
+                count += j - i -1;
+            }
+            count >= k? r =  m-1: l = m+1;
+        }
+        return l;
+    }
+};
 //Brute force/bucket sorting
 //Step1. compute the freq of all pair distances O(n^2)
 //Step2. sort their freq using bucket sort O(n^2)
