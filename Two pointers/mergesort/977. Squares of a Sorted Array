@@ -1,0 +1,33 @@
+977. Squares of a Sorted Array
+Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+//mergesort TLE
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        
+        for(int i = 0; i< nums.size(); ++i){
+            nums[i] = pow(nums[i],2);
+        }
+        mergesort(nums, 0, nums.size());
+        return nums;
+    }
+    void mergesort(vector<int> &nums, int l, int r){
+        vector<int> t(nums.size());
+        if(l+1>=r) return;
+        int m = l+(r-l)/2;
+        mergesort(nums, l, m);
+        mergesort(nums, m, r);
+        int i1 = l;
+        int i2 = m;
+        int index = 0;
+        while(i1<m || i2<r){
+            if(i2 == r||(i1<m && nums[i1]<nums[i2])){
+                t[index++] = nums[i1++];
+            }
+            else{
+                t[index++] = nums[i2++];
+            }
+        }
+        copy(t.begin(), t.begin()+index, nums.begin()+l);
+    }
+};
