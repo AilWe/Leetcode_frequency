@@ -38,7 +38,9 @@ private:
     int searchheight(TreeNode* root, bool & balanced){
         if(root == NULL) return 0;
         int l = searchheight(root->left, balanced);
+        if(!balanced) return -1;
         int r = searchheight(root->right, balanced);
+        if(!balanced) return -1;
         if(abs(l-r)>1){
             balanced = false;
             return -1;
