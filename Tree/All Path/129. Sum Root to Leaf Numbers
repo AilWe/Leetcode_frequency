@@ -42,8 +42,9 @@ public:
             traverse(root->left, ans, num);
             traverse(root->right, ans, num);
         }
-        else
-            ans += num;
+        else{
+           ans += num;
+        }
     }
 };
 class Solution {
