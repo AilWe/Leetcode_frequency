@@ -25,7 +25,7 @@ public:
         Sum(root->left, sum, total);
         Sum(root->right, sum, total);
         sum = (sum-root->val)/10;
-    }
+    } 
 };
 //T: O(n); S:O(n)
 class Solution {
