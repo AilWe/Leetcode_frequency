@@ -1,0 +1,19 @@
+The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the "root." Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that "all houses in this place forms a binary tree". It will automatically contact the police if two directly-linked houses were broken into on the same night.
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+//Compare grandparent + max of grandchildren(l.l+l.r+r.l+r.r) vs max of children(l+r)
+//Recursion w/o memorization
+//T: O(n^2), S: O(n)
+//TLE
+class Solution {
+public:
+    int rob(TreeNode* root) {
+        if(root == NULL) return 0;
+        int val = root->val;
+        int ll = root->left? rob (root->left->left):0;
+        int lr = root->left? rob(root->left->right): 0;
+        int rl = root->right? rob(root->right->left):0;
+        int rr = root->right? rob(root->right->right):0;
+        return max(val+ll+lr+rl+rr, rob(root->left)+rob(root->right));
+    }
+};
