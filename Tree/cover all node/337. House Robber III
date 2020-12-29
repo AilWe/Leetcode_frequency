@@ -17,3 +17,22 @@ public:
         return max(val+ll+lr+rl+rr, rob(root->left)+rob(root->right));
     }
 };
+
+//Compare grandparent + max of grandchildren(l.l+l.r+r.l+r.r) vs max of children(l+r)
+//Recursion w/memorization
+//T: O(n), S: O(n)
+class Solution {
+private:
+    unordered_map<TreeNode*, int> m_;
+public:
+    int rob(TreeNode* root) {
+        if(root == NULL) return 0;
+        if(m_.count(root)) return m_[root];
+        int val = root->val;
+        int ll = root->left? rob (root->left->left):0;
+        int lr = root->left? rob(root->left->right): 0;
+        int rl = root->right? rob(root->right->left):0;
+        int rr = root->right? rob(root->right->right):0;
+        return m_[root] = max(val+ll+lr+rl+rr, rob(root->left)+rob(root->right));
+    }
+};
