@@ -1,4 +1,8 @@
 912. Sort an Array
+1. quicksort T: O(nlogn)~O(n^2) S: O(logn)~O(n)
+2. Counting sort: T:O(n), S: O(max(nums)-min(nums))
+3. HeapSort: T: O(nlogn), S: O(n)
+4. MergeSort: T: O(nlogn), S: O(logn+n)
 Given an array of integers nums, sort the array in ascending order.
 //quicksort
 class Solution {
