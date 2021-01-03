@@ -8,7 +8,7 @@ public:
             while(prev->next&&prev->next->val< curr->val){
                 prev = prev->next;
             }
-            ListNode* nxt = curr->next;
+            ListNode* nxt = curr->next;//第一个循环，prev->next == NULL, 把dummy和head连在一起
             curr->next = prev->next;
             prev->next = curr;
             curr = nxt;
