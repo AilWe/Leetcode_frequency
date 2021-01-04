@@ -22,3 +22,4 @@ public:
         swap(first-> val, second-> val);
     }
 };
+//如果在新的公式内修改TreeNode*， 也必须加&
