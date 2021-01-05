@@ -23,7 +23,7 @@ public:
                 q.pop();
                 int x = p/100;//r
                 int y = p%100;//c
-                if(grid[x][y] == 2)
+                if(grid[x][y] == 2)//==2说明不是第一轮，而是经过处理后，仍然找不到
                     ans = max(ans, steps);
                 for(int i = 0; i< 4; ++i){
                     int ty = y+ dirs[i];//c
