@@ -1,0 +1,40 @@
+1162. As Far from Land as Possible
+Given an n x n grid containing only values 0 and 1, where 0 represents water and 1 represents land, find a water cell such that its distance to the nearest land cell is maximized, and return the distance. If no land or water exists in the grid, return -1.
+
+The distance used in this problem is the Manhattan distance: the distance between two cells (x0, y0) and (x1, y1) is |x0 - x1| + |y0 - y1|.
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int r = grid.size();
+        int c = grid[0].size();
+        queue <int> q;
+        for (int i = 0; i< r;++i){
+            for(int j = 0; j<c; ++j)
+                if(grid[i][j] == 1)
+                    q.push(100*i+j);//[i,j] =[c, r] 
+        }
+        vector<int> dirs = {0,-1, 0, 1, 0};
+        int ans = -1;
+        int steps = 0;
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                auto p = q.front(); 
+                q.pop();
+                int x = p/100;//r
+                int y = p%100;//c
+                if(grid[x][y] == 2)
+                    ans = max(ans, steps);
+                for(int i = 0; i< 4; ++i){
+                    int ty = y+ dirs[i];//c
+                    int tx = x+dirs[i+1];//r
+                    if(ty<0||tx<0||ty>=c||tx>=r||grid[tx][ty]!=0) continue;
+                    grid[tx][ty] =2;
+                    q.push(tx*100+ty);
+                }
+            }
+            ++steps;
+        }
+        return ans;
+    }
+};
