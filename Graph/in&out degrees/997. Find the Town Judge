@@ -1,0 +1,47 @@
+997. Find the Town Judge
+In a town, there are N people labelled from 1 to N.  There is a rumor that one of these people is secretly the town judge.
+
+If the town judge exists, then:
+
+The town judge trusts nobody.
+Everybody (except for the town judge) trusts the town judge.
+There is exactly one person that satisfies properties 1 and 2.
+You are given trust, an array of pairs trust[i] = [a, b] representing that the person labelled a trusts the person labelled b.
+
+If the town judge exists and can be identified, return the label of the town judge.  Otherwise, return -1.
+node with degree(in_degree - out_degree) N-1 is the judge
+T: O(N+T)
+S: O(N);
+class Solution {
+public:
+    int findJudge(int N, vector<vector<int>>& trust) {
+        vector<int> degrees(N+1);
+        for(const auto & t: trust){
+            --degrees[t[0]];
+            ++degrees[t[1]];
+        }
+        for(int i = 1; i<=N; ++i)
+            if(degrees[i] == N-1) return i;
+        return -1;
+    }
+};
+
+class Solution {
+public:
+    int findJudge(int N, vector<vector<int>>& trust) {
+        if(trust.size()<N-1) return -1;
+        vector <int> indegrees(N+1);
+        vector <int> outdegrees(N+1);
+        
+        for(auto p:trust){
+            ++outdegrees[p[0]];
+            ++indegrees[p[1]];
+        }
+        
+        for(int i = 1; i<=N;++i){
+            if(indegrees[i] == N-1 && outdegrees[i] == 0)
+                return i;
+        }
+        return -1;
+    }
+};
