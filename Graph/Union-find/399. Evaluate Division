@@ -53,3 +53,64 @@ private:
         return -1.0;
     }
 };
+//Union Find
+A/B = 2 -> parents[A] = {B,2}
+           parents[B] = {B, 1.0}
+
+B/C = 3 -> parents[C] = {B. 1.0/3}
+
+A/C? p[A].key == p[C].key == B = p[A].val / p[C].val = 2/(1.0/3) = 6
+T: O(e+q) S: O(e)
+class Solution {
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_map<string, pair<string, double>> g;
+        for(int i = 0; i< values.size(); ++i){
+            string A = equations[i][0];
+            string B = equations[i][1];
+            double k = values[i];
+            if(!g.count(A) && !g.count(B)){
+                g[A] = {B, k};
+                g[B] = {B, 1.0};
+            }
+            else if (!g.count(A)){
+                g[A] = {B, k};
+            }
+            else if (!g.count(B)){
+                g[B] = {A, 1.0/k};
+            }
+            else{
+                auto rA = find(A,g);
+                auto rB = find(B,g);
+                g[rA.first] = {rB.first, k/rA.second * rB.second};
+            }
+        }
+        
+            vector<double> result;
+            for(auto e:queries){
+                string x = e[0];
+                string y = e[1];
+                if(!g.count(x) || !g.count(y)){
+                    result.push_back(-1.0);
+                    continue;
+                }
+                double ans = 0;
+                auto rx = find(x, g);
+                auto ry = find(y, g);
+                if(rx.first == ry.first)
+                    ans = rx.second/ry.second;
+                else
+                    ans = -1.0;
+                result.push_back(ans);
+            }
+            return result;
+    }
+    pair<string, double>find(string A, unordered_map<string, pair<string, double>> &g){
+            if(A!= g[A].first){
+                auto p = find(g[A].first, g);
+                g[A].first = p.first;
+                g[A].second *= p.second;
+            }
+            return g[A]; 
+        }
+};
