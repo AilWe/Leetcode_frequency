@@ -1,0 +1,54 @@
+LeetCode 839. Similar String Groups
+//T: O(n^2*L)
+//S: O(n)
+class DSU{
+private: 
+    int size_;
+    vector<int> rank_;
+    vector<int> parent_;
+public:
+    DSU(int size): size_(size), parent_(size), rank_(size){
+        iota(parent_.begin(), parent_.end(), 0);
+    }
+    int size(){
+        return size_;
+    }
+    int find(int n){
+        if(n!= parent_[n]){
+            parent_[n] = find(parent_[n]);
+        }
+        return parent_[n];
+    }
+    void Union(int x, int y){
+        int px = find(x);
+        int py = find(y);
+        if(px == py) return;
+        if(rank_[py]>rank_[px])
+            swap(px, py);
+        else if(rank_[px] == rank_[py])
+            ++rank_[px];
+        parent_[py] = px;
+        --size_;
+    }
+};
+class Solution {
+public:
+    int numSimilarGroups(vector<string>& strs) {
+        DSU dsu(strs.size());
+       for(int i = 0; i< strs.size(); ++i){
+           for(int j = 0; j< strs.size(); ++j){
+               if(similar(strs[i], strs[j]) == true) 
+                   dsu.Union(i, j);
+              
+           }
+       } 
+         return dsu.size();
+    }
+    bool similar(string X, string Y){
+        int diff = 0;
+        for(int i = 0; i< X.length(); ++i){
+            if(X[i]!=Y[i] && ++diff>2) return false;
+        }
+        return true;
+    }
+};
