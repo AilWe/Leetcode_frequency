@@ -1,0 +1,55 @@
+952. Largest Component Size by Common Factor
+Given a non-empty array of unique positive integers A, consider the following graph:
+
+There are A.length nodes, labelled A[0] to A[A.length - 1];
+There is an edge between A[i] and A[j] if and only if A[i] and A[j] share a common factor greater than 1.
+Return the size of the largest connected component in the graph.
+//20000->n^2不可行
+//Union Find
+//Union each number with all its factors
+//Count the most frequent parent
+//T: O(n*sqrt(W)) S: O(W)
+class DSU{
+private:
+    vector<int> p_;
+public:
+    DSU(int n): p_(n){
+        for(int i = 0; i<n; ++i){
+            p_[i] = i;
+        }
+    }
+    int find(int x){
+        if(x != p_[x]){
+            p_[x] = find(p_[x]);
+        }
+        return p_[x];
+    }
+    void Union(int x, int y){
+        p_[find(x)] = p_[find(y)];
+    }
+};
+class Solution {
+public:
+    int largestComponentSize(vector<int>& A) {
+        int n = *max_element(A.begin(), A.end());
+        DSU dsu(n+1);
+        
+        for(auto a: A){
+            int k = sqrt(a);
+            for(int i = 2; i<=k; ++i){
+                if(a%i == 0){
+                    dsu.Union(a, i);
+                    dsu.Union(a, a/i);
+                }
+            }
+        }
+        
+        unordered_map<int, int> m;
+        int ans = 1;
+        for(int a:A){
+            ans = max(ans, ++m[dsu.find(a)]);
+        }
+        return ans;
+    }
+    
+};
