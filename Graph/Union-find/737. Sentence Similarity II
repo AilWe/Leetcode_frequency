@@ -1,0 +1,84 @@
+737. Sentence Similarity II
+Given two sentences words1, words2 (each represented as an array of strings), and a list of similar word pairs pairs, determine if two sentences are similar.
+
+For example, words1 = ["great", "acting", "skills"] and words2 = ["fine", "drama", "talent"] are similar, if the similar word pairs are pairs = [["great", "good"], ["fine", "good"], ["acting","drama"], ["skills","talent"]].
+
+Note that the similarity relation is transitive. For example, if "great" and "good" are similar, and "fine" and "good" are similar, then "great" and "fine" are similar.
+
+Similarity is also symmetric. For example, "great" and "fine" being similar is the same as "fine" and "great" being similar.
+
+Also, a word is always similar with itself. For example, the sentences words1 = ["great"], words2 = ["great"], pairs = [] are similar, even though there are no specified similar word pairs.
+
+Finally, sentences can only be similar if they have the same number of words. So a sentence like words1 = ["great"] can never be similar to words2 = ["doubleplus","good"].
+
+//solution 1:
+DFS
+T: O(|pairs| * |words|); S: O(|pairs|)
+class Solution {
+private:
+    unordered_map<string, unordered_set<string>> g_;
+public:
+    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<vector<string>>& pairs) {
+        if(words1.size() != words2.size()) return false;
+        //build graph
+        for(auto p: pairs){
+            g_[p[0]].insert(p[1]);
+            g_[p[1]].insert(p[0]);
+        }
+        unordered_set<string> visited; 
+        for(int i = 0; i< words1.size(); ++i){
+            visited.clear();
+            if(dfs(words1[i], words2[i], visited)==false) return false;
+        }
+        return true;
+    }
+    bool dfs(string w1, string w2, unordered_set<string> &visited){
+        if(w1 == w2) return true;
+        visited.insert(w1);
+        for(auto w: g_[w1]){
+            if(visited.count(w)) continue;
+            if(dfs(w, w2, visited)) return true;
+        }
+        return false;
+    }
+};
+ O(|pairs|+|words|)-hashtable
+ class Solution {
+private:
+    unordered_map<string, unordered_set<string>> g_;
+    unordered_map<string, int> ids_;
+public:
+    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<vector<string>>& pairs) {
+        if(words1.size() != words2.size()) return false;
+        //build graph
+        for(auto p: pairs){
+            g_[p[0]].insert(p[1]);
+            g_[p[1]].insert(p[0]);
+        }
+        int id = 0;
+        
+        for(auto p: pairs){
+            if(!ids_.count(p[1])) dfs(p[1], ++id);
+            if(!ids_.count(p[0])) dfs(p[0], ++id);
+        } 
+        for(int i = 0; i< words1.size(); ++i){
+            if(words1[i] == words2[i]) continue;
+            auto it1 = ids_.find(words1[i]);
+            auto it2 = ids_.find(words2[i]);
+            if(it1 == ids_.end() || it2 == ids_.end()) return false;
+            if(it1->second != it2->second) return false;
+        }
+        return true;
+    }
+    //将连同分量给一个不同的class id
+    bool dfs(string curr, int id){
+        ids_[curr] = id;
+        for(auto next: g_[curr]){
+            if(ids_.count(next)) continue;
+            if(dfs(next, id)) return true;
+        }
+        return false;
+    }
+};
+Union-find set
+T: O(|pairs|+|words|), S: O(|pairs|)
