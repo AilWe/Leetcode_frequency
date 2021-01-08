@@ -1,0 +1,45 @@
+433. Minimum Genetic Mutation
+A gene string can be represented by an 8-character long string, with choices from "A", "C", "G", "T".
+
+Suppose we need to investigate about a mutation (mutation from "start" to "end"), where ONE mutation is defined as ONE single character changed in the gene string.
+
+For example, "AACCGGTT" -> "AACCGGTA" is 1 mutation.
+
+Also, there is a given gene "bank", which records all the valid gene mutations. A gene must be in the bank to make it a valid gene string.
+
+Now, given 3 things - start, end, bank, your task is to determine what is the minimum number of mutations needed to mutate from "start" to "end". If there is no such a mutation, return -1.
+//T: O(n^2), S: O(n)
+class Solution {
+public:
+    int minMutation(string start, string end, vector<string>& bank) {
+        queue<string> q;
+        q.push(start);
+        
+        unordered_set<string> visited;
+        visited.insert(start);
+        
+        int mutations = 0;
+        while(!q.empty()){
+            size_t size = q.size();
+            while(size--){
+                string curr = move(q.front()); q.pop();
+                if(curr == end) return mutations;
+                for(string gene: bank){
+                    if(visited.count(gene)|| !validMutation(curr, gene)) continue;
+                    visited.insert(gene);
+                    q.push(gene);
+                }
+            }
+            ++mutations;
+        }
+        return -1;
+    }
+private:
+    bool validMutation(const string &s1, const string &s2){
+        int count = 0;
+        for(int i = 0; i<s1.length(); ++i){
+            if(s1[i] != s2[i] && count++) return false;
+        }
+        return true;
+    }
+};
