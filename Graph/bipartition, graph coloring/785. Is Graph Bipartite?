@@ -1,0 +1,33 @@
+785. Is Graph Bipartite?
+Given an undirected graph, return true if and only if it is bipartite.
+
+Recall that a graph is bipartite if we can split its set of nodes into two independent subsets A and B, such that every edge in the graph has one node in A and another node in B.
+
+The graph is given in the following form: graph[i] is a list of indexes j for which the edge between nodes i and j exists.  Each node is an integer between 0 and graph.length - 1.  There are no self edges or parallel edges: graph[i] does not contain i, and it doesn't contain any element twice.
+For each node
+1. if has not been coloredm color it to red(1)
+2. color its neighbors with a different color RED(1) to BLUE(-1) or BLUE(-1) to RED(-1)
+If we can finish the coloring then the graph is bipartite. All red nodes on the left no connections between them and all blues nodes on the right, again no connections between them. 
+red and blue nodes are neighbors
+T: O(V+E), S: O(V)
+//dfs
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        const int n = graph.size();
+        vector<int> colors(n);
+        for(int i = 0; i < n; ++i)
+            if(!colors[i] && !coloring(graph, colors, 1, i))
+                return false;
+        return true;
+    }
+private:
+    bool coloring(const vector<vector<int>> &graph, vector<int> &colors, int color, int node){
+        if(colors[node]) return colors[node] == color;
+        colors[node] = color;
+        for (int nxt: graph[node]){
+            if(!coloring(graph, colors, -color, nxt)) return false;
+        }
+        return true;
+    }
+};
