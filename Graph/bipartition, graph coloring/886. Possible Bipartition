@@ -5,3 +5,29 @@ Each person may dislike some other people, and they should not go into the same 
 Formally, if dislikes[i] = [a, b], it means it is not allowed to put the people numbered a and b into the same group.
 
 Return true if and only if it is possible to split everyone into two groups in this way.
+//T: O(V+E), S:O(V+E)
+class Solution {
+public:
+    bool possibleBipartition(int N, vector<vector<int>>& dislikes) {
+        //build graph
+        vector<vector<int>> graph(N+1);
+        for(auto p: dislikes){
+            graph[p[0]].push_back(p[1]);
+            graph[p[1]].push_back(p[0]);
+        }
+        vector<int> colors(N+1, 0);
+        int color = 1;
+        for(int i = 0; i< N+1; ++i){
+            if(!colors[i] && !coloring(graph, colors, color, i)) return false;
+        }
+        return true;
+    }
+    bool coloring(vector<vector<int>> &graph, vector<int> &colors, int color, int curr){
+        if(colors[curr]) return colors[curr] == color;
+        colors[curr] = color;
+        for(auto nxt: graph[curr]){
+            if(coloring(graph, colors, -color, nxt) == false) return false;
+        }
+        return true;    
+    }
+};
