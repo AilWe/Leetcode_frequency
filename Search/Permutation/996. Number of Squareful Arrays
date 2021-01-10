@@ -1,0 +1,36 @@
+996. Number of Squareful Arrays
+Given an array A of non-negative integers, the array is squareful if for every pair of adjacent elements, their sum is a perfect square.
+
+Return the number of permutations of A that are squareful.  Two permutations A1 and A2 differ if and only if there is some index i such that A1[i] != A2[i].
+class Solution {
+public:
+    int numSquarefulPerms(vector<int>& A) {
+        sort(A.begin(), A.end());
+        if(A.size()<2) return 0;
+        int ans = 0;
+        vector<int> curr;
+        vector<int> used(A.size(), 0);
+        dfs(ans, curr, A, 0, used);
+        return ans;
+    }
+    void dfs(int &ans, vector<int> &curr, vector<int> &A, int d, vector<int> &used){
+        if(d == A.size()){
+                ans++;
+            return;
+        }
+        for(int i = 0; i< A.size(); ++i){
+            if(used[i]) continue;
+            if(i>0&&A[i] == A[i-1]&&used[i-1] == 0) continue;
+            if(!curr.empty() && !isvalid(curr.back(), A[i])) continue;
+            curr.push_back(A[i]);
+            used[i] = 1;
+            dfs(ans, curr, A, d+1, used);
+            used[i] = 0;
+            curr.pop_back();
+        }
+    }
+    bool isvalid(int x, int y){
+        int s = sqrt(x+y);
+        return s*s == x+y;
+    }
+};
