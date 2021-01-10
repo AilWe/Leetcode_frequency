@@ -99,3 +99,19 @@ public:
         }
     }
 };
+//dp
+g[i][j] := the cost of appending word[j] after word[i] 
+e.g. dist('gcta','ctaagt') = 3
+we want to find the shortest path that visits each node and only once
+
+Memorization of the combination and the last node instead of permutaion
+dp[s][i]:= min cost to visting nodes of s and ends with i, s is a binary string. 
+e.g. dp[14][2] is the min cost to visit {1,2,3} and ends with 2. 
+Init: dp[2^1][1] = len(A[i]) # visit i, the cost is len(A[i])
+
+Transition:
+dp[s][i] = min{dp[s-2^i][j] + g[i][j]} #append A[i] after A[j]
+Ans: min(dp[2^n-1][*])
+T: O(n^2 * 2^n)
+S: O(n* 2^n)
+//graph 中找一条路径
