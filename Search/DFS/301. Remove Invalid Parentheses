@@ -1,0 +1,20 @@
+301. Remove Invalid Parentheses
+Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+1. Check whether a input string is valid
+((), )(
+count(')') <= count('(') i < n-1
+count(')') == count('(') i = n-1
+
+2. Compute min number of '(' and ')' to remove
+Unbalanced ')' + Unbalanced '('
+
+3. Try all possible ways to remove r')'s and l'('. Remove ')' first to make prefix valid
+
+dfs(s,l,r)
+  if l == 0 and r == 0 and valid(s):
+    ans.add(s)
+Avoid duplications:
+"(()" -> "()"
+Only remove the first paransthesis if there are consective ones
+
+T: O(2^l+r), S: O((l+r)^2) ~ O(n^2)
