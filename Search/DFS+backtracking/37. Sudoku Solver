@@ -7,3 +7,7 @@ Each of the digits 1-9 must occur exactly once in each row.
 Each of the digits 1-9 must occur exactly once in each column.
 Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
 The '.' character indicates empty cells.
+board[y][x]
+9 rows, key: y
+9 cols, key: x
+9 boxes, key: (y/3)*3 + x/3
