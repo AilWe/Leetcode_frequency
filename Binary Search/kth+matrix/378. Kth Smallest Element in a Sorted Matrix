@@ -37,7 +37,7 @@ public:
             int m = l+(r-l)/2;
             int s = n;
             for(auto v:matrix){
-                auto it = upper_bound(v.begin(), v.begin()+s, m);
+                auto it = upper_bound(v.begin(), v.begin()+s, m);//s是取这一列最大的数，下一列理论上到不了这里，更快
                 s = distance(v.begin(), it);
                 count+=s;
             }
