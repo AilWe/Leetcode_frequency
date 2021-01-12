@@ -23,3 +23,28 @@ public:
         return l;
     }
 };
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        if(matrix.size() == 0) return -1;
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int l = matrix[0][0];
+        int r = matrix[m-1][n-1];
+        while(l<r){
+            int count = 0;
+            int m = l+(r-l)/2;
+            int s = n;
+            for(auto v:matrix){
+                auto it = upper_bound(v.begin(), v.begin()+s, m);
+                s = distance(v.begin(), it);
+                count+=s;
+            }
+            if(count < k) l = m+1;
+            else r = m;
+        }
+        return l;
+        
+    }
+};
