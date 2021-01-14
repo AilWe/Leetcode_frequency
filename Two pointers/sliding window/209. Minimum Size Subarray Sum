@@ -4,6 +4,33 @@ Given an array of n positive integers and a positive integer s, find the minimal
 class Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
+        if(nums.size() == 0) return 0;
+        int l = 0;
+        int r = 0;
+        int total = nums[0];
+        int count = 1;
+        int ans = INT_MAX;
+        while(l< nums.size()){
+            while(r< nums.size() && total < s){
+                r++;
+                if(r<nums.size()){
+                    count++;
+                    total+=nums[r];
+                }
+            }
+            if(r == nums.size()) break;
+            ans = min(count, ans);
+            total -=nums[l];
+            ++l;
+            --count;
+        }
+        if(ans == INT_MAX) return 0;
+        return ans;
+    }
+};
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
         int l = 0;
         int r = 0;
         int total = 0;
