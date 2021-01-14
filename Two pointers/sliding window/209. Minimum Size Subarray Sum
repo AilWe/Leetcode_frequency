@@ -13,7 +13,7 @@ public:
                 total += nums[r];
                 ++r;
             }
-            if(total<s) break;//因为r先越界，所以需要break
+            if(total<s) break;//因为r先越界，所以需要break，可能此时，total满足了条件，但r也超了
             ans = min(ans, r-l); 
             total -= nums[l];
             ++l;
