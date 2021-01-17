@@ -26,3 +26,29 @@ public:
         return ans;
     }
 };
+class Solution {
+public:
+    int subarraysWithKDistinct(vector<int>& A, int K) {
+        return helper(A, K) - helper(A, K-1);
+    }
+    int helper(vector<int> &A, int k){
+        vector<int> count(A.size()+1);
+        int ans = 0;
+        int i = 0;
+        for(int j = 0; j< A.size(); ++j){
+            if(count[A[j]] == 0) {
+                k--;
+            }
+            count[A[j]]++;
+            while(k<0){
+                count[A[i]]--;
+                if(count[A[i]] == 0){
+                    k++;
+                }
+                i++;
+            }
+            ans+=j-i+1;
+        }
+        return ans;
+    }
+};
