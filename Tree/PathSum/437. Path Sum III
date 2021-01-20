@@ -32,6 +32,9 @@ private:
     }
 };
 //Running Prefix Sum
+Time complexity: O(n)
+
+Space complexity: O(h)
 class Solution {
 public:
     int pathSum(TreeNode* root, int sum) {
