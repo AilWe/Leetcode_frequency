@@ -61,6 +61,36 @@ public:
         return vector<int> (ans.begin(), ans.end());
     }
 };
+
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        int n = nums.size();
+        //Init heap
+        for(int i = n/2; i>= 0; i--){
+            heapify(i, n-1, nums);
+        }
+        
+        //get min
+        for(int i = n-1; i>=1; i--){
+            swap(nums[0], nums[i]);
+            heapify(0, i-1, nums);
+        }
+        return nums;
+    }
+    void heapify(int i, int e, vector<int> &nums){
+        while(i <= e){
+            int l = 2*i + 1;
+            int r = 2*i + 2;
+            int j = i;
+            if(l <= e && nums[l] > nums[j]) j = l;
+            if(r <= e && nums[r] > nums[j]) j = r;
+            if(j == i) break;
+            swap(nums[i], nums[j]);
+            swap(i, j);
+        }
+    }
+};
 //mergesort
 
 class Solution {
