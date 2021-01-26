@@ -1,0 +1,3 @@
+num & 1 //check the last bit (least significant bit) of num is set
+<< *2 ,>> /2; bit left shift or right shift
+A^B^B = A
