@@ -1,0 +1,22 @@
+125. Valid Palindrome
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+Note: For the purpose of this problem, we define empty string as valid palindrome.
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        //tolower(s.begin(), s.end());
+        int l = 0;
+        int r = s.length()-1;
+        while(l<r){
+            if(isalnum(s[l]) && isalnum(s[r])){
+                if(tolower(s[l++]) != tolower(s[r--])) return false;
+            }
+            else{
+                if(!isalnum(s[l])) l++;
+                if(!isalnum(s[r])) r--;
+            }
+        }
+        return true;
+    }
+};
