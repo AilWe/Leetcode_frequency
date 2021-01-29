@@ -40,3 +40,68 @@ public:
         return false;
     }
 };
+//Trie
+class MagicDictionary {
+private:
+    struct TrieNode{
+        bool is_word;
+        vector<TrieNode*> children;
+        TrieNode(): is_word(false), children(26, nullptr){}
+        ~TrieNode(){
+            for(auto child: children){
+                if (child) delete child;
+            }
+        }
+    };
+    unique_ptr<TrieNode> root_;
+public:
+    /** Initialize your data structure here. */
+    MagicDictionary(): root_(new TrieNode()) {}
+    
+    void buildDict(vector<string> dictionary) {
+        for(auto word: dictionary){
+            TrieNode* p = root_.get();
+            for(char c: word){
+                if(!p->children[c-'a'])
+                    p->children[c-'a'] = new TrieNode();
+                p = p->children[c-'a'];
+            }
+            p->is_word = true;
+        }
+    }
+    
+    bool search(string searchWord) {
+        //TrieNode* p = root_.get();
+        for(int i = 0; i<searchWord.length(); ++i){
+            for(char c = 'a'; c <= 'z'; ++c){
+                if(searchWord[i] == c) continue;
+                char tmp = searchWord[i];
+                searchWord[i] = c;
+                if(contains(searchWord)) return true;
+                searchWord[i] = tmp;
+            }
+        }
+        return false;
+        
+    }
+    
+    bool contains(string word){
+        TrieNode* p = root_.get();
+        for(auto c: word){
+            p = p->children[c-'a'];
+            if(!p){
+                return false;
+                break;
+            }
+        }
+        if(p->is_word == true) return true;
+        return false;
+    }
+};
+
+/**
+ * Your MagicDictionary object will be instantiated and called as such:
+ * MagicDictionary* obj = new MagicDictionary();
+ * obj->buildDict(dictionary);
+ * bool param_2 = obj->search(searchWord);
+ */
