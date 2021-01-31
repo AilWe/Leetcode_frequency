@@ -1,0 +1,42 @@
+We have a list of bus routes. Each routes[i] is a bus route that the i-th bus repeats forever. For example if routes[0] = [1, 5, 7], this means that the first bus (0-th indexed) travels in the sequence 1->5->7->1->5->7->1->… forever.
+
+We start at bus stop S (initially not on a bus), and we want to go to bus stop T. Travelling by buses only, what is the least number of buses we must take to reach our destination? Return -1 if it is not possible.
+
+1 <= routes.length <= 500.
+1 <= routes[i].length <= 500.
+0 <= routes[i][j] < 10 ^ 6.
+
+BFS  Expand step by step, stop-> all stops that can be reached by taking one bus that passes current stop. Record bus/stop, never ride the same bus or stop at the location twice
+class Solution {
+public:
+  int numBusesToDestination(vector<vector<int>>& routes, int S, int T) {
+    if (S == T) return 0;
+    
+    unordered_map<int, vector<int>> m;
+    for (int i = 0; i < routes.size(); ++i)
+      for (const int stop : routes[i])
+        m[stop].push_back(i);
+    
+    vector<int> visited(routes.size(), 0);
+    queue<int> q;
+    q.push(S);
+    int buses = 0;
+    
+    while (!q.empty()) {
+      int size = q.size();      
+      ++buses;
+      while (size--) {
+        int curr = q.front(); q.pop();        
+        for (const int bus : m[curr]) {
+          if (visited[bus]) continue;          
+          visited[bus] = 1;
+          for (int stop : routes[bus]) {
+            if (stop == T) return buses;            
+            q.push(stop);
+          }
+        }        
+      }      
+    }
+    return -1;
+  }
+};
