@@ -51,3 +51,11 @@ private:
         if(child->right) buildGraph(child, child->right);
     }
 };
+Solution2: Recursion
+  1. compute the distance from root to target
+  2. Collect nodes based on the distance
+    a.itself
+    b.nodes in the subtree that does not contain target
+  
+  T: O(n), S: O(n)
+  
