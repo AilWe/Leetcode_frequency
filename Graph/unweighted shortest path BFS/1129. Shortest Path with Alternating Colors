@@ -1,0 +1,59 @@
+1129. Shortest Path with Alternating Colors
+Consider a directed graph, with nodes labelled 0, 1, ..., n-1.  In this graph, each edge is either red or blue, and there could be self-edges or parallel edges.
+
+Each [i, j] in red_edges denotes a red directed edge from node i to node j.  Similarly, each [i, j] in blue_edges denotes a blue directed edge from node i to node j.
+
+Return an array answer of length n, where each answer[X] is the length of the shortest path from node 0 to node X such that the edge colors alternate along the path (or -1 if such a path doesn't exist).
+/*
+BFS
+state:(node, color)
+One queue, two hashtables(one for each color)
+Swap colors for next step
+Start:{{0,0}, {0,1}}
+T: O(V+E) S: O(V+E)
+*/
+class Solution {
+public:
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red_edges, vector<vector<int>>& blue_edges) {
+        vector<unordered_set<int>> edges_r(n);
+        vector<unordered_set<int>> edges_b(n);
+        
+        for(const auto &e:red_edges){
+            edges_r[e[0]].insert(e[1]);
+        }
+        for(const auto &e: blue_edges){
+            edges_b[e[0]].insert(e[1]);
+        }
+        
+        unordered_set<int> seen_r;
+        unordered_set<int> seen_b;
+        vector<int> ans(n, -1);
+        
+        queue<pair<int, int>> q; // (node, color)
+        q.push({0, 0}); //red
+        q.push({0, 1}); //blue
+        
+        seen_r.insert(0);
+        seen_b.insert(0);
+        
+        int steps = 0;
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                int p = q.front().first;
+                int is_red = q.front().second;
+                q.pop();
+                ans[p] = ans[p]>= 0? min(ans[p], steps) : steps;
+                const auto &edges = is_red? edges_r: edges_b;
+                auto &seen = is_red? seen_r: seen_b;
+                for(int nxt: edges[p]){
+                    if (seen.count(nxt)) continue;
+                    seen.insert(nxt);
+                    q.push({nxt, 1-is_red});
+                }
+            }
+            ++steps;
+        }
+        return ans;
+    }
+};
