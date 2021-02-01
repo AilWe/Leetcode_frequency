@@ -12,3 +12,16 @@ There is only one box 'B' and one target cell 'T' in the grid.
 The box can be moved to an adjacent free cell by standing next to the box and then moving in the direction of the box. This is a push.
 The player cannot walk through the box.
 Return the minimum number of pushes to move the box to the target. If there is no way to reach the target, return -1.
+
+Map is fixed
+State: (box_pos, player_pos)
+Goal: minimum # of pushes to move the box to the target
+BFS by # of pushes => player "teleports" from current pos to the next push position (0 moves).
+However, we still need to check whether there is a path BFS/DFS inside antoher BFS
+(bx, by, px, py)
+dx = bx-px, dy = by-py
+(bx+dx, by+dy, bx, by)
+
+A*: g = # of pushes, h = manhattan distance from curr box pos to target one (<= actual cost).
+f = g+h
+
