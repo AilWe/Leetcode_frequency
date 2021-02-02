@@ -1,0 +1,45 @@
+684. Redundant Connection
+In this problem, a tree is an undirected graph that is connected and has no cycles.
+
+The given input is a graph that started as a tree with N nodes (with distinct values 1, 2, ..., N), with one additional edge added. The added edge has two different vertices chosen from 1 to N, and was not an edge that already existed.
+
+The resulting graph is given as a 2D-array of edges. Each element of edges is a pair [u, v] with u < v, that represents an undirected edge connecting nodes u and v.
+
+Return an edge that can be removed so that the resulting graph is a tree of N nodes. If there are multiple answers, return the answer that occurs last in the given 2D-array. The answer edge [u, v] should be in the same format, with u < v.
+
+Solution 1:
+for each edge {u,v}, use DFS to check whether u, v are already connected. O(n)
+T: O(n^2);
+
+class Solution {
+public:
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        unordered_map<int, vector<int>> graph;
+        for(auto edge: edges){
+            int u = edge[0];
+            int v = edge[1];
+            
+            unordered_set<int> visited;
+            if(hasPath(u,v,graph, visited))
+                return edge;
+            
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+        }
+        return {};
+    }
+private:
+    bool hasPath(int curr, int goal, const unordered_map<int, vector<int>> &graph, unordered_set<int> &visited){
+        if(curr == goal) return true;
+        visited.insert(curr);
+        if(!graph.count(curr) || !graph.count(goal)) return false;
+        for(int next: graph.at(curr)){
+            if(visited.count(next)) continue;
+            if(hasPath(next, goal, graph, visited)) return true;
+        }
+        return false;
+    }
+Solution 2:
+Weighted quick-union with path compression
+For each edge{u, v}, check whether u, v are already connected. O(log*n) = O(1)
+T: O(nlog*n) = O(n)
