@@ -9,7 +9,21 @@ S: O(N+E)
 Solution 2: Bellman-Ford
 T: O(NE)
 S: O(N)
-
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        constexpr int MAX_TIME = 101*100;
+        vector<int> dist(n, MAX_TIME);//
+        dist[k-1] = 0;
+        for(int i = 0; i<n; ++i)
+            for(const auto &time:times){
+                int u = time[0] -1, v = time[1] - 1, w = time[2];
+                dist[v] = min(dist[v], dist[u] + w);//动态规划
+            }
+        int max_dist = *max_element(dist.begin(), dist.end());
+        return max_dist == MAX_TIME?-1:max_dist;
+    }
+};
 Solution 3: Floyd-Warshall(All pair)
 T: O(N^3)
 S: O(N^2)
