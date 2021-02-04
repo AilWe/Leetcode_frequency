@@ -1,0 +1,21 @@
+787. Cheapest Flights Within K Stops
+There are n cities connected by m flights. Each flight starts from city u and arrives at v with a price w.
+
+Now given all the cities and flights, together with starting city src and the destination dst, your task is to find the cheapest price from src to dst with up to k stops. If there is no such route, output -1.
+
+Solution 1: DFS
+T: O(n^k+1), S:O(k+1)
+pruning by best cost so far
+
+Solution 2: BFS
+T: O(n^k+1), S: O(n^k+1)
+pruning by best cost so far
+
+Solution 3: Bellman-Ford
+T: O(k|E|) ~ O(k*n^2)
+S: O(k*n) -> O(n)
+dp:
+def dp[k][v]: min cost from src to v with up to k flights
+Init: dp[0: k+2][src] = 0
+dp[k][v] = min({dp[k-1][u] + cost[u][v]}, dp[k-1][v])//中转或不中转保持上次状态
+Ans: dp[k+1][dst]
