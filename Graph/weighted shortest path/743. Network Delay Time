@@ -1,0 +1,15 @@
+You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target.
+
+We will send a signal from a given node k. Return the time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.
+Graph problem: single source all destinations shortest path
+Solution 1: Dijkstra's algorithm
+T: O(N^2)-> O(NlogN + E)
+S: O(N+E)
+
+Solution 2: Bellman-Ford
+T: O(NE)
+S: O(N)
+
+Solution 3: Floyd-Warshall(All pair)
+T: O(N^3)
+S: O(N^2)
