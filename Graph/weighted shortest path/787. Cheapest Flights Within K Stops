@@ -6,6 +6,38 @@ Now given all the cities and flights, together with starting city src and the de
 Solution 1: DFS
 T: O(n^k+1), S:O(k+1)
 pruning by best cost so far
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        g_.clear();
+        for(const auto &e:flights)
+            g_[e[0]].emplace_back(e[1], e[2]);
+        vector<int> visited(n, 0);
+        visited[src] = 1;
+        int ans = INT_MAX;
+        dfs(src, dst, K+1, 0, visited, ans);
+        return ans == INT_MAX?-1: ans;
+    }
+private:
+    unordered_map<int, vector<pair<int, int>>> g_;
+    
+    void dfs(int src, int dst, int K, int cost, vector<int> &visited, int &ans){
+        if(src ==dst){
+            ans = cost;
+            return;
+        }
+        
+        if(K == 0) return;
+        
+        for(const auto &p:g_[src]){
+            if(visited[p.first]) continue; //do not visit the same city twice
+            if(cost + p.second > ans) continue;// important, pruning
+            visited[p.first] = 1;
+            dfs(p.first, dst, K-1, cost + p.second, visited, ans);
+            visited[p.first] = 0;
+        }
+    }
+};
 
 Solution 2: BFS
 T: O(n^k+1), S: O(n^k+1)
