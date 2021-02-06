@@ -105,7 +105,7 @@ public:
         cost[src] = 0;
         for(int i = 0; i<=K; ++i){
             vector<int> tmp(cost);
-            for(const auto &p:flights)
+            for(const auto &p:flights)//使用滚动数组降维，cost是i-1th， tmp是ith
                 tmp[p[1]] = min(tmp[p[1]], cost[p[0]]+p[2]);
             cost.swap(tmp);
         }
