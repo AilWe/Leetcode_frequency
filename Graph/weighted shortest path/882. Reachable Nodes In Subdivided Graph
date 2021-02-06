@@ -1,0 +1,52 @@
+882. Reachable Nodes In Subdivided Graph
+ou are given an undirected graph (the "original graph") with n nodes labeled from 0 to n - 1. You decide to subdivide each edge in the graph into a chain of nodes, with the number of new nodes varying between each edge.
+
+The graph is given as a 2D array of edges where edges[i] = [ui, vi, cnti] indicates that there is an edge between nodes ui and vi in the original graph, and cnti is the total number of new nodes that you will subdivide the edge into. Note that cnti == 0 means you will not subdivide the edge.
+
+To subdivide the edge [ui, vi], replace it with (cnti + 1) new edges and cnti new nodes. The new nodes are x1, x2, ..., xcnti, and the new edges are [ui, x1], [x1, x2], [x2, x3], ..., [xcnti+1, xcnti], [xcnti, vi].
+
+In this new graph, you want to know how many nodes are reachable from the node 0, where a node is reachable if the distance is maxMoves or less.
+
+Given the original graph and maxMoves, return the number of nodes that are reachable from node 0 in the new graph.
+Solution: Single source shortest path
+Compute the max moves left when reaching a node
+weights of u, v = number of nodes + 1
+Dijkstra: O(|E|log|E|) heap
+HP[a] = m
+HP[b] = n
+Nodes between a, b covered = min(nodeds, m+n)
+BFS
+S: O(|E|)
+class Solution {
+public:
+    int reachableNodes(vector<vector<int>>& edges, int maxMoves, int n) {
+        unordered_map<int, unordered_map<int, int>> g;
+        for(const auto &e:edges)
+            g[e[0]][e[1]] = g[e[1]][e[0]] = e[2];//默认是顶点数量，实际使用时要+1
+        
+        priority_queue<pair<int, int>> q; //{hp, node}, sort by HP desc
+        unordered_map<int, int> HP;       //node-> HP left
+        q.push({maxMoves, 0});
+        while(!q.empty()){
+            int hp = q.top().first;
+            int cur = q.top().second;
+            q.pop();
+            if(HP.count(cur)) continue;
+            HP[cur] = hp;
+            for(const auto &pair: g[cur]){
+                int nxt = pair.first;
+                int nxt_hp = hp-pair.second - 1;
+                if(HP.count(nxt) || nxt_hp < 0) continue;
+                q.push({nxt_hp, nxt});//自动排好序
+            }
+        }
+        
+        int ans = HP.size(); // Original node covered;
+        for(const auto &e:edges){
+            int uv = HP.count(e[0])? HP[e[0]]: 0;
+            int vu = HP.count(e[1])? HP[e[1]]: 0;
+            ans += min(e[2], uv+vu);
+        }
+        return ans;
+    }
+};
