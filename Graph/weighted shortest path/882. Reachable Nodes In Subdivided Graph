@@ -15,7 +15,7 @@ Dijkstra: O(|E|log|E|) heap
 HP[a] = m
 HP[b] = n
 Nodes between a, b covered = min(nodeds, m+n)
-BFS
+
 S: O(|E|)
 class Solution {
 public:
@@ -50,3 +50,5 @@ public:
         return ans;
     }
 };
+BFS
+
