@@ -1,0 +1,47 @@
+847. Shortest Path Visiting All Nodes
+An undirected, connected graph of N nodes (labeled 0, 1, 2, ..., N-1) is given as graph.
+
+graph.length = N, and j != i is in the list graph[i] exactly once, if and only if nodes i and j are connected.
+
+Return the length of the shortest path that visits every node. You may start and stop at any node, you may revisit nodes multiple times, and you may reuse edges.
+Solution 1:BFS
+每个顶点可访问多次
+How to reprensent a unique state?
+(curr_node, visited_nodes)
+Use a 32 bit int to represent visited_nodes 
+
+N=4
+Node 0,2,3,are visited: 1101
+Goal: 1111/(1<<4) - 1
+
+Init:push all node to the queue
+
+T: O(n*2^n), S: O(n*2^n)
+class Solution {
+public:
+    int shortestPathLength(vector<vector<int>>& graph) {
+        const int n = graph.size();
+        const int kAns = (1<<n) - 1;//goal的二进制数表示
+        queue<pair<int, int>> q;//{当前节点，访问过的数}
+        vector<vector<int>> visited(n, vector<int>(1<<n));//vector 3X fast than hashtable
+        for(int i = 0; i< graph.size(); ++i)
+            q.push({i, 1<<i});//表示这个顶点本身被访问过了
+        int steps = 0;
+        while(!q.empty()){
+            int s = q.size();
+            while(s--){
+                auto p = q.front();
+                q.pop();
+                int node = p.first;
+                int state = p.second;
+                if(state == kAns) return steps;
+                if(visited[node][state]) continue;
+                visited[node][state] = 1;
+                for(int next: graph[node])
+                    q.push({next, state|(1<<next)});
+            }
+            ++steps;
+        }
+        return -1;
+    }
+};
