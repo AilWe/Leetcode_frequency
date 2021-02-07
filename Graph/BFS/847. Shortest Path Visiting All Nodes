@@ -7,7 +7,7 @@ Return the length of the shortest path that visits every node. You may start and
 Solution 1:BFS
 每个顶点可访问多次
 How to reprensent a unique state?
-(curr_node, visited_nodes)
+(curr_node, visited_nodes) //如果没有增加新访问的结点，就是白访问了
 Use a 32 bit int to represent visited_nodes 
 
 N=4
