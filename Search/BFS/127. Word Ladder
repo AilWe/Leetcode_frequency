@@ -1,0 +1,46 @@
+127. Word Ladder
+A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words such that:
+
+The first word in the sequence is beginWord.
+The last word in the sequence is endWord.
+Only one letter is different between each adjacent pair of words in the sequence.
+Every word in the sequence is in wordList.
+
+Shortest path, implicit graph
+Method: BFS/ bidirectional BFS
+BFS: 
+total nodes = b^0 + b^1 + b^2 ... + b^d = O(b^d)
+Bidirectional BFS
+total nodes = 2*( b^0 + b^1 + b^2 ... + b^d/2) = O(b^d/2)
+T: O(n*26^l) -> O(n* 26^ l/2), l = len(word), n = |wordList|, S: O(n)
+
+BFS:
+q.push(start)
+step = 0
+
+while not q.empty():
+  ++step
+  size = q.size()
+  while size-->0:
+    node = q.pop()
+    new_nodes = expand(node)
+    if goal in new_nodes: return step+1
+    q.append(new_nodes)
+return NOT_FOUND
+
+Bidirectional BFS
+
+s1.inset(start)
+s2.insert(end)
+step = 0;
+
+while not (s1.empty() || s2.empty()):
+  ++step
+  swap*( s1, s2)
+  s = {}
+  for node in s1:
+    new_nodes = expand(node)
+    if any(new_nodes) in s2: return step+1
+    s.append(new_nodes)
+  s1 = s
+return NOT_FOUND
