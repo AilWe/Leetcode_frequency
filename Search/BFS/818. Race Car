@@ -17,7 +17,7 @@ Node: {pos,  speed}
 
 Only de-duplicate nodes with speed +-1, otherwise LTE or OOM
 
-T: O(2^D), S: O(2^D)
+T: O(2^D), S: O(2^D) D is the # of steps
 
 Solution 2: Recursion with memorization (DP)
 
