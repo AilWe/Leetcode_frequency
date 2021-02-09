@@ -2,4 +2,44 @@
 Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. 
 All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
 //greedy: sort children + post order traversal
-//把带环的有向图变成无向图
+//把带环的有向图变成无向图,树
+class Solution {
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        route_.clear();
+        trips_.clear();
+        
+        for(const auto &pair : tickets)
+            trips_[pair[0]].push_back(pair[1]);
+        
+        for(auto &pair : trips_){
+            auto & dests = pair.second;
+            sort(dests.begin(), dests.end());
+        }
+        
+        const string kStart = "JFK";
+        
+        visit(kStart);
+        
+        return vector<string>(route_.crbegin(), route_.crend());
+    }
+private:
+    //src -> {dest1, dest2, ..., destn}
+    unordered_map<string, deque<string>> trips_;
+    //ans (reversed)
+    vector<string> route_;
+    
+    void visit(const string &src){
+        auto &dests = trips_[src];
+        while(!dests.empty()){
+            //Get the smaller dest
+            const string dest = dests.front();
+            //Remove the ticket
+            dests.pop_front();
+            //Visit dest
+            visit(dest);
+        }
+        //Add current node to the route
+        route_.push_back(src);
+    }
+};
