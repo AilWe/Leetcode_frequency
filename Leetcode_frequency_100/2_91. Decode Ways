@@ -49,3 +49,29 @@ private:
         return ansSum;
     }
 };
+//dp[i] is the number of ways of decoding substring s[:i]. Normally dp[i] = dp[i-1] + dp[i-2], but it is not true in this problem. Only when the decode is possible we add the result of the previous indices
+class Solution {
+public:
+    int numDecodings(string s) {
+        //DP array to store the subproblem results
+        vector<int> dp(s.length()+1);
+        dp[0] = 1;
+        
+        //Ways to decode a tring of size 1 is 1. Unless the string is '0'
+        //'0' doesn't have a single digit decode
+        dp[1] = s[0] == '0'? 0:1;
+        
+        for(int i = 2; i< dp.size(); ++i){
+            //check if successful single digit decode is possible
+            if(s[i-1] != '0')
+                dp[i] = dp[i-1];
+            
+            //check if successful two digits decode is possible
+            
+            int two_digit = stoi(s.substr(i-2, 2));
+            if(two_digit >= 10 && two_digit <= 26)
+                dp[i] += dp[i-2];
+        }
+        return dp[s.length()];
+    }
+};
