@@ -16,7 +16,7 @@ public:
         int ans = 0;
         while(i<=j){
             ++ans;
-            if(i == j) break;
+            if(i == j) break;// the last people
             if(people[i]+people[j] <= limit){//最多两个人
                 --j;
             }
