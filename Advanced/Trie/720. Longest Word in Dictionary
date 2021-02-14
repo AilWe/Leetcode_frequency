@@ -34,6 +34,33 @@ public:
         return best;
     }
 };
+
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        //Sort by length DESC, if there is a tie, sort by lexcial order
+        sort(words.begin(), words.end(),
+            [](const string &w1, const string &w2){
+                if(w1.length() != w2.length())
+                    return w1.length() > w2.length();
+                return w1< w2;
+            });
+        unordered_set<string> dict(words.begin(), words.end());
+        
+        for(const string &word: words){
+            string prefix;
+            bool valid = true;
+            for(int i = 0; i< word.length()-1 && valid; ++i){
+                prefix += word[i];
+                if(!dict.count(prefix)) {
+                    valid = false; 
+                }
+            }
+            if(valid) return word;
+        }
+        return "";
+    }
+};
 Solution 2: Trie
 For every word, check every of its prefixes
 
