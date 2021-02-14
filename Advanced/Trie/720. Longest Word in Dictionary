@@ -2,3 +2,47 @@
 Given a list of strings words representing an English Dictionary, find the longest word in words that can be built one character at a time by other words in words. If there is more than one possible answer, return the longest word with the smallest lexicographical order.
 
 If there is no answer, return the empty string.
+
+Solution 1: Brute Force
+For every word, check every of it prefixes
+
+"apple"
+"a"         O(1)
+"ap"        O(2)
+"app"       O(3)
+"appl"      O(4)
+
+T: O(sum(wi^2)), S: O(n*w)
+
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        string best;
+        unordered_set<string> dict(words.begin(), words.end());
+        
+        for(const string &word : words){
+            if(word.length()< best.length() || (word.length() == best.length() && word > best)) continue;
+            string prefix;
+            bool valid = true;
+            for(int i = 0; i< word.length()-1 && valid; ++i){
+                prefix += word[i];
+                if(!dict.count(prefix)) valid = false;
+            }
+            if(valid) best = word;
+        }
+        
+        return best;
+    }
+};
+Solution 2: Trie
+For every word, check every of its prefixes
+
+"apple"     
+"a"         O(1)
+"ap"        O(1)
+"app"       O(1)
+"appl"      O(1)
+
+T: O(sum(wi))
+S: O(26*n*w)
+
