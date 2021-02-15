@@ -1,0 +1,66 @@
+307. Range Sum Query - Mutable
+Given an array nums and two types of queries where you should update the value of an index in the array, and retrieve the sum of a range in the array.
+
+Implement the NumArray class:
+
+NumArray(int[] nums) Initializes the object with the integer array nums.
+void update(int index, int val) Updates the value of nums[index] to be val.
+int sumRange(int left, int right) Returns the sum of the subarray nums[left, right] (i.e., nums[left] + nums[left + 1], ..., nums[right]).
+
+Idea:
+Fenwick Tree
+
+init T: O(nlogn)
+query T: O(logn)
+update T: O(logn)
+class FenwickTree{
+private:
+    static inline int lowbit(int x){
+        return x & (-x);
+    }
+    vector<int> sums_;
+public:
+    FenwickTree(int n): sums_(n+1, 0) {}
+    
+    void update(int i, int delta){
+        while(i< sums_.size()){
+            sums_[i] += delta;
+            i += lowbit(i);
+        }
+    }
+    
+    int query(int i) const{
+        int sum = 0;
+        while(i > 0){
+            sum += sums_[i];
+            i -= lowbit(i);
+        }
+        return sum;
+    }
+};
+class NumArray {
+private:
+    vector<int> nums_;
+    FenwickTree tree_;
+public:
+    NumArray(vector<int>& nums): nums_(move(nums)), tree_(nums_.size()) {
+        for(int i = 0; i< nums_.size(); ++i)
+            tree_.update(i+1, nums_[i]);
+    }
+    
+    void update(int index, int val) {
+        tree_.update(index+1, val - nums_[index]);
+        nums_[index] = val;
+    }
+    
+    int sumRange(int left, int right) {
+        return tree_.query(right+1) - tree_.query(left);
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * obj->update(index,val);
+ * int param_2 = obj->sumRange(left,right);
+ */
