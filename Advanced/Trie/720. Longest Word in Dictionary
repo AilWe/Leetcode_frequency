@@ -128,3 +128,53 @@ public:
         return "";
     }
 };
+class Trie{
+private:
+    struct TrieNode{
+        TrieNode(): is_word(false), children(26, nullptr){}
+        ~TrieNode(){
+            for(auto child: children)
+                if(child) delete child;
+        }
+        bool is_word;
+        vector<TrieNode*> children;
+    };
+    unique_ptr<TrieNode> root_;
+public:
+    Trie(): root_(new TrieNode()){}
+    
+    void insert(const string &word){
+        TrieNode* p = root_.get();
+        for(const char c: word){
+            if(!p->children[c-'a'])
+                p->children[c-'a'] = new TrieNode();
+            p = p->children[c-'a'];
+        }
+        p->is_word = true;
+    }
+    
+    bool hasAllPrefixes(const string &word){
+        const TrieNode* p = root_.get();
+        for(const char c: word){
+            if(!p->children[c-'a']) return false;
+            p = p->children[c-'a'];
+            if(!p->is_word) return false;
+        }
+        return true;
+    }
+};
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        Trie trie;
+        for(const string &word: words)
+            trie.insert(word);
+        string best;
+        for(const string &word: words){
+            if(word.length()< best.length() || (word.length() == best.length() && word > best)) continue;
+            if(trie.hasAllPrefixes(word))
+                best = word;
+        }
+        return best;
+    }
+};
