@@ -26,7 +26,7 @@ public:
             int n = word.length();
             vector<string> prefixes(n+1, "");
             vector<string> suffixes(n+1, "");
-            for(int i = 0; i<n; ++i){
+            for(int i = 0; i<n; ++i){//L^2
                 prefixes[i+1] = prefixes[i] + word[i];
                 suffixes[i+1] = word[n-i-1] + suffixes[i];
             }
