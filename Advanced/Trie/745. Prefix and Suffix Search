@@ -52,4 +52,16 @@ public:
  * int param_1 = obj->f(prefix,suffix);
  */
 Solution 2: Trie
-T: O(N*L^2)
+T: O(N*L^2) + O(Q*L)
+S: O(N*L^2)
+
+Query{suffix}_{prefix}, e.g. {le_ap}
+For every word, we insert {suffixes}_word into trie
+_apple
+e_apple
+le_apple
+ple_apple
+pple_apple
+apple_apple
+
+A word of length L has L possible keys
