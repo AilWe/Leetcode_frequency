@@ -1,0 +1,22 @@
+560. Subarray Sum Equals K
+Given an array of integers nums and an integer k, return the total number of continuous subarrays whose sum equals to k.
+//keep tracking the prefix sums and their counts
+//s->count: how many arrays nums[0:j] has sum of s
+//cur_sum = sum(nums[0:i])
+//check how many arrays nums[0:j] that has sum(cur_sum - k)
+//then there are the same nnumber of arrays nums[j+1:i] that have sum k
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        if(nums.empty()) return 0;
+        unordered_map<int, int> counts{{0,1}};
+        int cur_sum = 0;
+        int ans = 0;
+        for(const int num: nums){
+            cur_sum+=num;
+            ans+= counts[cur_sum-k];
+            ++counts[cur_sum];
+        }
+        return ans;
+    }
+};
