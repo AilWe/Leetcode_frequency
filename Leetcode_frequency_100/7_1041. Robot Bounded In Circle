@@ -12,7 +12,30 @@ This solution is based on two facts about the limit cycle trajectory.
 After at most 4 cycles, the limit cycle trajectory returns to the initial point x = 0, y = 0. That is related to the fact that 4 directions (north, east, south, west) define the repeated cycles' plane symmetry
 Let's use numbers from 0 to 3 to mark the directions: north = 0, east = 1, south = 2, west = 3. In the array directions we could store corresponding coordinates changes, i.e. directions[0] is to go north, directions[1] is to go east, directions[2] is to go south, and directions[3] is to go west.
 The initial robot position is in the center x = y = 0, facing north idx = 0.
-
+c++:
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+        //N, E, S, W = 0, 1, 2, 3
+        vector<vector<int>> directions = {{0,1},{1,0},{0,-1},{-1,0}};
+        
+        int x = 0;
+        int y = 0;
+        int idx = 0;
+        for(auto c:instructions){
+            if(c == 'L') idx = (idx+3)%4;
+            else if(c == 'R') idx = (idx +1)%4;
+            else{
+                x += directions[idx][0];
+                y += directions[idx][1];
+            }    
+        }
+        
+        return (x == 0 && y == 0) || idx != 0;
+        
+        
+    }
+};
 java:
 class Solution {
     public boolean isRobotBounded(String instructions) {
